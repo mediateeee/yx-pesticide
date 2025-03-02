@@ -1,0 +1,2 @@
+﻿pyinstaller -F -w test.py
+pyinstaller -F -w --version-file version.txt 
