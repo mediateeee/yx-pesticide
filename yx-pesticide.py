@@ -73,7 +73,7 @@ def check_for_updates():
         # 查找可执行文件的下载链接
         download_url = None
         for asset in assets:
-            if asset["name"] == "yx-pesiticide.exe":  # 检查文件名
+            if asset["name"] == "yx-pesticide.exe":  # 检查文件名
                 download_url = asset["browser_download_url"]
                 break
 
