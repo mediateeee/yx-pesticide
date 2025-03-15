@@ -1,4 +1,4 @@
-# Windows Explorer.exe
+﻿# Windows Explorer.exe
 大小: 9376256 字节 (9156 KiB)
 
 MD5: 1d5d289446a9ef04bbf74fdc0f20183b
@@ -28,7 +28,7 @@ SHA1: a158a36de522336a19fad5ccb4f599456c313566
 - 病毒先复制本体到 **%USERPROFILE%\AppData\Roaming** 下，此时该目录下：
 
     - **360se_dump.db**           - 目的、作用未知；
-    - **googlechrome.log**        - 病毒LOG，是否覆写未知（缺少大量数据证明）；
+    - **googlechrome.log**        - 病毒LOG，是否覆写未知（缺少大量数据证明），且使用UTC时间；
     - **Windows Explorer.exe**    - 病毒本体。
 
 - 会通过写注册表实现开机自启，位置： **HEKY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run** 下的一个字符串。

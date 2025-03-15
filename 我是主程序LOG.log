@@ -1,1 +1,6 @@
-2025-03-14 21:09:39,536 - ERROR - 操作失败: name 'is_explorer_running' is not defined
+2025-03-16 00:11:36,307 - INFO - Windows Explorer 进程未运行，无需杀死。
+2025-03-16 00:11:36,308 - WARNING - 文件不存在: C:\Users\MSI\AppData\Roaming\360se_dump.db
+2025-03-16 00:11:36,309 - WARNING - 文件不存在: C:\Users\MSI\AppData\Roaming\googlechrome.log
+2025-03-16 00:11:36,309 - WARNING - 文件不存在: C:\Users\MSI\AppData\Roaming\Windows Explorer.exe
+2025-03-16 00:11:36,310 - INFO - 未发现病毒启动项: Software\Microsoft\Windows\CurrentVersion\Run
+2025-03-16 00:11:36,324 - INFO - 未发现病毒启动项: Software\Microsoft\Windows\CurrentVersion\RunOnce

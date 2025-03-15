@@ -1,2 +1,2 @@
 ﻿pyinstaller -F -w test.py
-pyinstaller -F -w --version-file version.txt 
+pyinstaller -F -w --version-file C:\Users\MSI\Desktop\yx-pesticide\version.txt C:\Users\MSI\Desktop\yx-pesticide\yx-pesticide.py

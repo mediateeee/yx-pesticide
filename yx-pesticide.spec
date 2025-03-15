@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['c:\\Users\\MSI\\Desktop\\yx-pesticide\\yx-pesticide.py'],
+    ['C:\\Users\\MSI\\Desktop\\yx-pesticide\\yx-pesticide.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -41,5 +41,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    version='version.txt',
+    version='C:\\Users\\MSI\\Desktop\\yx-pesticide\\version.txt',
 )

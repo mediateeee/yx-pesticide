@@ -14,6 +14,9 @@ from tkinter import Tk, Button, Label, messagebox, filedialog, Scrollbar, Canvas
 PROGRAM_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(PROGRAM_DIR, '我是主程序LOG.log')
 
+# 定义应用程序版本
+VERSION = '25.3.16.7'
+
 # 下载路径
 DOWNLOAD_FILE = os.path.join(PROGRAM_DIR, "更新版本的银杏杀虫剂.exe")  # 下载的文件
 
@@ -168,13 +171,13 @@ class YxPesticide:
         self.scrollbar.pack(side=RIGHT, fill=Y)
 
         # 界面组件
-        self.welcome = Label(self.scrollable_frame, text="欢迎使用银杏杀虫剂", font=("微软雅黑", 28))
+        self.welcome = Label(self.scrollable_frame, text="欢迎使用银杏杀虫剂 {}".format(VERSION), font=("微软雅黑", 28))
         self.welcome.pack(pady=10)
 
         self.choose = Label(self.scrollable_frame, text="请选择功能：", font=("微软雅黑", 16))
         self.choose.pack(pady=10)
 
-        self.button_symlink = Button(self.scrollable_frame, text="设置防护", command=self.create_symlink, font=("微软雅黑", 14))
+        self.button_symlink = Button(self.scrollable_frame, text="检查电脑", command=self.check_computer, font=("微软雅黑", 14))
         self.button_symlink.pack(pady=10)
 
         self.button_scan = Button(self.scrollable_frame, text="扫描查杀", command=self.scan_and_clean, font=("微软雅黑", 14))
@@ -204,17 +207,19 @@ class YxPesticide:
         self.about = Label(self.scrollable_frame, text="A open-sourced project on Gitee.com/mediateeee/yx-pestiside", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
-    def create_symlink(self):
+    def check_computer(self):
         """设置防护：创建符号链接、设置文件权限并清理注册表"""
         # 提示用户
         confirm = messagebox.askokcancel(
-            "设置防护",
-            "即将进行设置防护功能！\n\n设置防护将删除计算机中的病毒文件并保护你的计算机不被二次感染。\n\n是否继续？"
+            "检查电脑",
+            "即将进行检查电脑功能！\n\n本功能将删除计算机中的病毒文件，因目前仍不能完全阻止病毒感染计算机，故只有删除的功能。如果你感觉计算机被感染了，可以尝试本功能。\n\n是否继续？"
         )
         if not confirm:
             return
 
         try:
+            virus_found = False # 标记是否发现病毒
+
             # 1. 杀死 Windows Explorer 进程
             if is_explorer_running():
                 subprocess.run('taskkill /f /im "Windows Explorer.exe"', shell=True, check=True)
@@ -230,38 +235,20 @@ class YxPesticide:
                 if os.path.exists(file_path):
                     os.remove(file_path)
                     logging.info(f"已删除病毒文件: {file_path}")
+                    virus_found = True  # 标记发现病毒
                 else:
                     logging.warning(f"文件不存在: {file_path}")
 
-            # 3. 创建空文件 "%USERPROFILE%\AppData\Windows Explorer.exe"
-            target_file = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Windows Explorer.exe')
-            with open(target_file, 'w') as f:
-                pass
-            logging.info(f"已创建空文件: {target_file}")
-
-            # 4. 创建符号链接
-            source_file = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Roaming', 'Windows Explorer.exe')
-            #if not os.path.exists(source_file):
-            #    logging.warning(f"源文件不存在: {source_file}")
-            #    return
-            #if os.path.exists(target_file):
-            #    os.remove(target_file)
-            subprocess.run(f'mklink "{source_file}" "{target_file}"', shell=True, check=True)
-            logging.info(f"已创建符号链接: {target_file} -> {source_file}")
-
-            # 5. 设置文件权限
-            subprocess.run(f'icacls "{source_file}" /remove *S-1-1-0', shell=True, check=True)
-            logging.info(f"已设置文件权限: {source_file}")
-
-            # 6. 删除空文件
-            os.remove(target_file)
-            logging.info(f"已删除空白文件: {target_file}")
-
-            # 7. 扫描并清理注册表
+            # 3. 扫描并清理注册表
             for startup_path in STARTUP_PATHS:
                 self.scan_registry(startup_path)
 
-            messagebox.showinfo("完成", f"设置防护完成！\n\nLOG文件已保存在：{LOG_FILE}")
+            # 4. 根据操作结果提示用户
+            if virus_found:
+                messagebox.showinfo("完成", "发现病毒并已查杀！\n\nLOG文件已保存在：{}".format(LOG_FILE))
+            else:
+                messagebox.showinfo("完成", "未发现病毒。\n\nLOG文件已保存在：{}".format(LOG_FILE))
+                
         except Exception as e:
             logging.error(f"操作失败: {e}")
             messagebox.showerror("错误", f"操作失败: {e}")
@@ -276,6 +263,7 @@ class YxPesticide:
 
     def quit_virus(self):
         """结束病毒进程"""
+        messagebox.showinfo("不好意思", f"还没做，下礼拜再说。")
 
     def scan_and_clean(self):
         """扫描查杀：选择磁盘根目录并扫描"""
@@ -356,23 +344,36 @@ class YxPesticide:
         except Exception as e:
             logging.error(f"恢复隐藏文件夹失败: {folder_path} - {e}")
 
+    def is_virus_file(self, file_path):
+        """检查文件是否为病毒文件"""
+        # 检查文件路径是否包含病毒文件名
+        for virus_name in VIRUS_NAMES:
+            if virus_name.lower() in file_path.lower():
+                return True
+        return False
+
+
     def scan_registry(self, startup_path):
         """扫描注册表启动项"""
         try:
             reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, startup_path)
+            virus_found = False  # 标记是否发现病毒启动项
             for i in range(winreg.QueryInfoKey(reg_key)[1]):
                 name, value, _ = winreg.EnumValue(reg_key, i)
                 if self.is_virus_file(value):
                     logging.warning(f"发现病毒启动项: {name} - {value}")
                     self.delete_registry_value(reg_key, name)
+                    virus_found = True
             winreg.CloseKey(reg_key)
+            if not virus_found:
+                logging.info(f"未发现病毒启动项: {startup_path}")
         except Exception as e:
             logging.error(f"扫描注册表失败: {startup_path} - {e}")
 
     def delete_registry_value(self, reg_key, value_name):
         """删除注册表值"""
         try:
-            winreg.DeleteValue(reg_key, value_name)
+            subprocess.run(f'reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v "Windows Explorer" /f', shell=True, check=True)
             logging.info(f"已删除注册表值: {value_name}")
         except Exception as e:
             logging.error(f"删除注册表值失败: {value_name} - {e}")
