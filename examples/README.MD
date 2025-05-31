@@ -25,15 +25,15 @@ SHA1: a158a36de522336a19fad5ccb4f599456c313566
 这是一个大致的感染逻辑，具体的感染逻辑仍有待进一步探究。
 
 ## 目前掌握的信息（不分先后顺序）
-- 病毒先复制本体到 **%USERPROFILE%\AppData\Roaming** 下，此时该目录下：
+- 病毒先复制本体到 **%USERPROFILE%\AppData\Roaming** 下，并释放文件，此时该目录下：
 
     - **360se_dump.db**           - 目的、作用未知；
-    - **googlechrome.log**        - 病毒LOG，是否覆写未知（缺少大量数据证明），且使用UTC时间；
+    - **googlechrome.log**        - 病毒LOG，是否覆写未知，且使用UTC时间；
     - **Windows Explorer.exe**    - 病毒本体。
 
 - 会通过写注册表实现开机自启，位置： **HEKY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run** 下的一个字符串。
 
-- 会与外部服务器通讯。由于两个云沙箱检测到的IP地址不同，目前没有绝对定论具体指向哪个地址。
+- 会与外部服务器通讯。由于两个云沙箱检测到的IP地址不同，目前没有绝对定论具体指向哪个地址。根据对LOG文件的分析，认为病毒有上传信息到服务器服务器的能力。
 
 - 是否可通过网络传播未知。
 
@@ -54,4 +54,4 @@ SHA1: a158a36de522336a19fad5ccb4f599456c313566
 - 等待补充。
 
 ## 最后
-2025年3月14日 23:51
+2025年5月31日 21:15

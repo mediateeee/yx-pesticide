@@ -8,14 +8,14 @@ import sys
 import requests
 import json
 import psutil
-from tkinter import Tk, Button, Label, messagebox, filedialog, Scrollbar, Canvas, Frame, VERTICAL, RIGHT, Y, BOTH, LEFT
+from tkinter import Tk, Button, Label, messagebox, filedialog
 
 # 获取程序运行目录
 PROGRAM_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(PROGRAM_DIR, '我是主程序LOG.log')
 
 # 定义应用程序版本
-VERSION = '25.3.16.7'
+VERSION = '25.6.1.0'
 
 # 下载路径
 DOWNLOAD_FILE = os.path.join(PROGRAM_DIR, "更新版本的银杏杀虫剂.exe")  # 下载的文件
@@ -60,6 +60,33 @@ def run_as_admin():
         # 退出当前进程
         sys.exit()
 
+def compare_versions(current_version, latest_version):
+    """
+    比较版本号，判断是否需要更新
+    版本号格式为: 主版本号.次版本号.修订号.构建号 (例如: 25.3.16.7)
+    """
+    try:
+        current_parts = list(map(int, current_version.split('.')))
+        latest_parts = list(map(int, latest_version.split('.')))
+        
+        # 确保版本号有4个部分，不足的补0
+        while len(current_parts) < 4:
+            current_parts.append(0)
+        while len(latest_parts) < 4:
+            latest_parts.append(0)
+        
+        # 从主版本号开始逐级比较
+        for i in range(4):
+            if latest_parts[i] > current_parts[i]:
+                return True  # 需要更新
+            elif latest_parts[i] < current_parts[i]:
+                return False  # 不需要更新
+        
+        return False  # 版本号完全相同，不需要更新
+    except Exception as e:
+        logging.error(f"版本号比较失败: {e}")
+        return False
+
 def check_for_updates():
     """检查是否有新版本"""
     try:
@@ -71,6 +98,13 @@ def check_for_updates():
 
         release_info = json.loads(response.text)
         latest_version = release_info["tag_name"]  # 最新版本号
+        
+        # 比对版本号
+        if not compare_versions(VERSION, latest_version):
+            logging.info(f"当前版本 {VERSION} 已是最新，无需更新")
+            messagebox.showinfo("检查更新", f"当前版本 {VERSION} 已是最新，无需更新")
+            return None
+            
         assets = release_info.get("assets", [])
 
         # 查找可执行文件的下载链接
@@ -119,7 +153,8 @@ def update_program():
     # 弹出提示框询问用户是否更新
     root = Tk()
     root.withdraw()  # 隐藏主窗口
-    confirm = messagebox.askyesno("检查到更新", f"发现新版本 {latest_version}，是否立即更新？\n\n若选择更新，应用程序会提示“未响应”，请耐心等待，不要关闭应用程序。\n\n即使是最新版本，也有会提示更新哦。")
+    confirm = messagebox.askyesno("检查到更新", 
+                                f"当前版本: {VERSION}\n最新版本: {latest_version}\n\n是否立即更新？\n\n若选择更新，应用程序会提示“未响应”，请耐心等待，不要关闭应用程序。")
     root.destroy()  # 关闭 Tk 窗口
 
     if not confirm:
@@ -149,62 +184,37 @@ class YxPesticide:
     def __init__(self, root):
         self.root = root
         self.root.title("银杏杀虫剂")
-        self.root.geometry("690x650")
+        self.root.geometry("600x650")
 
-        # 创建 Canvas 和 Scrollbar
-        self.canvas = Canvas(root)
-        self.scrollbar = Scrollbar(root, orient=VERTICAL, command=self.canvas.yview)
-        self.scrollable_frame = Frame(self.canvas)
-
-        # 配置 Canvas
-        self.scrollable_frame.bind(
-            "<Configure>",
-            lambda e: self.canvas.configure(
-                scrollregion=self.canvas.bbox("all")
-            )
-        )
-        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        self.canvas.configure(yscrollcommand=self.scrollbar.set)
-
-        # 将 Canvas 和 Scrollbar 添加到窗口
-        self.canvas.pack(side=LEFT, fill=BOTH, expand=True)
-        self.scrollbar.pack(side=RIGHT, fill=Y)
-
-        # 界面组件
-        self.welcome = Label(self.scrollable_frame, text="欢迎使用银杏杀虫剂 {}".format(VERSION), font=("微软雅黑", 28))
+        # 界面组件 - 直接添加到root窗口
+        self.welcome = Label(root, text="欢迎使用银杏杀虫剂 {}".format(VERSION), font=("微软雅黑", 28))
         self.welcome.pack(pady=10)
 
-        self.choose = Label(self.scrollable_frame, text="请选择功能：", font=("微软雅黑", 16))
+        self.choose = Label(root, text="请选择功能：", font=("微软雅黑", 16))
         self.choose.pack(pady=10)
 
-        self.button_symlink = Button(self.scrollable_frame, text="检查电脑", command=self.check_computer, font=("微软雅黑", 14))
+        self.button_symlink = Button(root, text="检查电脑", command=self.check_computer, font=("微软雅黑", 14))
         self.button_symlink.pack(pady=10)
 
-        self.button_scan = Button(self.scrollable_frame, text="扫描查杀", command=self.scan_and_clean, font=("微软雅黑", 14))
+        self.button_scan = Button(root, text="扫描查杀", command=self.scan_and_clean, font=("微软雅黑", 14))
         self.button_scan.pack(pady=10)
 
-        self.button_about = Button(self.scrollable_frame, text="关于病毒", command=self.show_about, font=("微软雅黑", 14))
+        self.button_about = Button(root, text="关于病毒", command=self.show_about, font=("微软雅黑", 14))
         self.button_about.pack(pady=10)
 
-        self.button_update = Button(self.scrollable_frame, text="检查更新", command=update_program, font=("微软雅黑", 14))
+        self.button_update = Button(root, text="检查更新", command=update_program, font=("微软雅黑", 14))
         self.button_update.pack(pady=10)
 
-        self.button_quit = Button(self.scrollable_frame, text="解除占用", command=self.quit_virus, font=("微软雅黑", 14))
-        self.button_quit.pack(pady=10)
-
-        self.button_log = Button(self.scrollable_frame, text="打开LOG所在目录", command=self.open_log_directory, font=("微软雅黑", 14))
+        self.button_log = Button(self.root, text="打开LOG所在目录", command=self.open_log_directory, font=("微软雅黑", 14))
         self.button_log.pack(pady=10)
 
-        self.about = Label(self.scrollable_frame, text="Made by mediateeee & DeepSeek. \n 若您是第一次使用该应用程序，请先进行“设置防护”，再进行“扫描查杀”。", font=("微软雅黑", 12))
+        self.about = Label(self.root, text="Made by mediateeee & DeepSeek. \n 若您是第一次使用该应用程序，请先进行“检查电脑”，再进行“扫描查杀”。", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
-        self.about = Label(self.scrollable_frame, text="请注意：\n“设置防护”后，如果U盘再次被感染，当你打开被感染的文件夹时，\n病毒虽然无法感染你的计算机，但是会直接运行在U盘之中，若您不进行弹出就拔掉U盘，\n就很有可能导致您U盘中数据的丢失，所以一定要进行弹出。\n此时若无法弹出，请使用“解除占用”功能。\n另外，在“设置防护”之后，若U盘再次被感染，请不要打开U盘中的任何被感染的文件夹，\n否则会因上述问题而无法查杀干净,此时可先用“解除占用”，再用“扫描查杀”。", font=("微软雅黑", 12))
+        self.about = Label(self.root, text="任何操作完成后都会提示“完成”，如果没有提示，那一定是出现了问题，\n此时请你将LOG文件发送与我，以供我进一步进行分析。", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
-        self.about = Label(self.scrollable_frame, text="任何操作完成后都会提示“完成”，如果没有提示，那一定是出现了问题，\n此时请你将LOG文件发送与我，以供我进一步进行分析。", font=("微软雅黑", 12))
-        self.about.pack(pady=10)
-
-        self.about = Label(self.scrollable_frame, text="A open-sourced project on Gitee.com/mediateeee/yx-pestiside", font=("微软雅黑", 12))
+        self.about = Label(self.root, text="A open-sourced project on Gitee.com/mediateeee/yx-pestiside", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
     def check_computer(self):
@@ -260,10 +270,6 @@ class YxPesticide:
             os.startfile(log_dir)
         else:
             messagebox.showerror("错误", f"目录不存在: {log_dir}")
-
-    def quit_virus(self):
-        """结束病毒进程"""
-        messagebox.showinfo("不好意思", f"还没做，下礼拜再说。")
 
     def scan_and_clean(self):
         """扫描查杀：选择磁盘根目录并扫描"""
@@ -352,7 +358,6 @@ class YxPesticide:
                 return True
         return False
 
-
     def scan_registry(self, startup_path):
         """扫描注册表启动项"""
         try:
@@ -381,7 +386,7 @@ class YxPesticide:
     def show_about(self):
         """关于病毒：显示病毒信息"""
         about_text = """
-        病毒名称：“Windows Explorer.exe”
+        病毒名称："Windows Explorer.exe"
         行为特征（有待扩充）：
         1. 将U盘中的文件夹隐藏并替换为恶意可执行文件。
         2. 复制自身到系统目录（如 AppData\Roaming）。
@@ -394,7 +399,7 @@ class YxPesticide:
 
 if __name__ == "__main__":
     # 检查是否以管理员身份运行
-    run_as_admin()
+    #run_as_admin()
 
     # 如果以管理员身份运行，启动主程序
     root = Tk()
