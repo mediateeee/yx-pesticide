@@ -18,7 +18,7 @@ if not os.path.exists(DESKTOP_DIR):  # 检查英文Desktop是否存在
     DESKTOP_DIR = os.path.join(os.path.expanduser('~'), '桌面')  # 尝试中文桌面
 
 # 定义应用程序版本
-VERSION = '25.6.1.3'
+VERSION = '25.6.1.4'
 
 # 下载路径
 DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe")  # 下载到桌面
@@ -187,7 +187,7 @@ class YxPesticide:
     def __init__(self, root):
         self.root = root
         self.root.title("银杏杀虫剂")
-        self.root.geometry("600x650")
+        self.root.geometry("600x700")
 
         # 界面组件 - 直接添加到root窗口
         self.welcome = Label(root, text="欢迎使用银杏杀虫剂 {}".format(VERSION), font=("微软雅黑", 28))
@@ -214,7 +214,7 @@ class YxPesticide:
         self.about = Label(self.root, text="Made by mediateeee & DeepSeek. \n 若您是第一次使用该应用程序，请先进行“检查电脑”，再进行“扫描查杀”。", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
-        self.about = Label(self.root, text="任何操作完成后都会提示“完成”，如果没有提示，那一定是出现了问题，\n此时请你将LOG文件发送与我，以供我进一步进行分析。\n\n如果你下载了新版的应用程序，但是找不到，桌面上应该会有一个“更新版本的银杏杀虫剂”，那个就是最新版本。", font=("微软雅黑", 12))
+        self.about = Label(self.root, text="任何操作完成后都会提示“完成”，如果没有提示，那一定是出现了问题，\n此时请你将LOG文件发送与我，以供我进一步进行分析。\n\n如果你下载了新版的应用程序，但是找不到\n桌面上应该会有一个“更新版本的银杏杀虫剂”，那个就是最新版本。", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
         self.about = Label(self.root, text="A open-sourced project on Gitee.com/mediateeee/yx-pestiside", font=("微软雅黑", 12))
