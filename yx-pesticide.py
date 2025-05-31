@@ -15,7 +15,7 @@ PROGRAM_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(PROGRAM_DIR, '我是主程序LOG.log')
 
 # 定义应用程序版本
-VERSION = '25.6.1.0'
+VERSION = '25.6.1.1'
 
 # 下载路径
 DOWNLOAD_FILE = os.path.join(PROGRAM_DIR, "更新版本的银杏杀虫剂.exe")  # 下载的文件
@@ -296,6 +296,17 @@ class YxPesticide:
                     if self.is_folder_virus(file_path):
                         logging.info(f"发现病毒文件: {file_path}")
                         self.clean_folder_virus(file_path)
+
+        target_file = os.path.join(scan_path, ".exe")
+        if os.path.exists(target_file):
+            try:
+                os.remove(target_file)
+                logging.info(f"已删除病毒文件: {target_file}")
+                virus_found = True
+            except Exception as e:
+                logging.error(f"删除文件失败: {target_file} - {e}")
+                messagebox.showerror("错误", f"无法删除文件 {target_file}\n错误信息: {e}")
+
         else:
             logging.warning(f"目录不存在: {scan_path}")
 
