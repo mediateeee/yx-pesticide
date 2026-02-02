@@ -16,8 +16,6 @@ StringFileInfo(
     StringStruct(u'FileDescription', u'银杏杀虫剂'),    # 文件说明，鼠标悬浮exe会显示，也会显示在 详细信息-文件说明
     StringStruct(u'LegalCopyright', u'开放源代码应用程序'), #版权，会显示在 详细信息-版权
     StringStruct(u'OriginalFilename', u'yx-pesticide'), #原始文件名，会显示在 详细信息-原始文件名
-    StringStruct(u'ProductName', u'yx-pesiticide'),      #产品名称，会显示在 详细信息-产品名称
-    StringStruct(u'ProductVersion', u'26.1.31.0')])    #产品版本，会显示在 详细信息-产品版本
   ]),
 VarFileInfo([VarStruct(u'Translation', [2052, 1200])]) # 语言，中文简体
   ]

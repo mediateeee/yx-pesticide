@@ -19,7 +19,7 @@ LOG_FILE = os.path.join(PROGRAM_DIR, '我是主程序LOG.log') # LOG文件目录
 DESKTOP_DIR = os.path.join(os.path.expanduser('~'), 'Desktop') # 当前运行应用程序的用户的桌面
 
 # 定义应用程序版本（年.月.日.版本）
-VERSION = '26.1.31.0'
+VERSION = '26.1.31.1'
 
 # 更新下载路径
 DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe")  # 下载到桌面
