@@ -295,7 +295,7 @@ def update_program():
     root = Tk()
     root.withdraw()
     confirm = messagebox.askyesno("检查到更新", 
-                                f"当前版本: {VERSION}\n最新版本: {latest_version}\n\n是否立即更新？\n\n更新日志：\n{update_log}")
+                                f"当前版本: {VERSION}\n最新版本: {latest_version}\n\n是否立即更新？ 注意，如果点击下载没反应，请查看桌面上是不是有一个叫做“更新版本的银杏杀虫剂”的软件？如果是，请给他改个名字再下载更新。\n\n更新日志：\n{update_log}")
     root.destroy()
 
     if not confirm:
@@ -342,10 +342,13 @@ class YxPesticide:
         self.button_update = Button(root, text="检查更新", command=update_program, font=("微软雅黑", 14))
         self.button_update.pack(pady=10)
 
-        self.button_log = Button(self.root, text="打开LOG所在目录", command=self.open_log_directory, font=("微软雅黑", 14))
+        self.button_log = Button(self.root, text="打开日志", command=self.open_log_file, font=("微软雅黑", 14))
         self.button_log.pack(pady=10)
 
         self.about = Label(self.root, text="Made by mediateeee & DeepSeek. \n 若您是第一次使用该应用程序，请先进行“检查电脑”，再进行“扫描查杀”。", font=("微软雅黑", 12))
+        self.about.pack(pady=10)
+
+        self.about = Label(self.root, text="有任何问题，欢迎联系：mediateeee@foxmail.com", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
         self.about = Label(self.root, text="开放源代码应用程序，详见 https://gitee.com/mediateeee/yx-pesticide ", font=("微软雅黑", 12))
@@ -403,13 +406,25 @@ class YxPesticide:
             logging.error(f"操作失败: {e}")
             messagebox.showerror("错误", f"操作失败: {e}")
 
-    def open_log_directory(self):
-        """打开LOG所在目录"""
-        log_dir = os.path.dirname(LOG_FILE)
-        if os.path.exists(log_dir):
-            os.startfile(log_dir)
-        else:
-            messagebox.showerror("错误", f"目录不存在: {log_dir}")
+    def open_log_file(self):
+        """打开LOG文件"""
+        if os.path.exists(LOG_FILE):
+            try:  # 直接打开日志
+                os.startfile(LOG_FILE)
+                logging.info("已打开LOG文件")
+            except Exception as e:
+                try: # 指定记事本打开日志
+                    subprocess.run(['notepad.exe', LOG_FILE], check=True)
+                    logging.info("已使用记事本打开LOG文件")
+                except Exception as e2:
+                    error_msg = f"无法打开LOG文件: {str(e)}\n尝试用记事本打开也失败: {str(e2)}"
+                    logging.error(error_msg)
+                    messagebox.showerror("错误", f"{error_msg}\n\n将尝试打开LOG文件所在目录。")
+                # 尝试打开目录
+                log_dir = os.path.dirname(LOG_FILE)
+                if os.path.exists(log_dir):
+                    os.startfile(log_dir)
+                    messagebox.showerror("错误", f"目录打不开: {log_dir}")
 
     def scan_and_clean(self):
         """扫描查杀：选择磁盘根目录并扫描"""
