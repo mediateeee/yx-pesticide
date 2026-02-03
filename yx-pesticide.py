@@ -19,7 +19,7 @@ LOG_FILE = os.path.join(PROGRAM_DIR, '我是主程序LOG.log') # LOG文件目录
 DESKTOP_DIR = os.path.join(os.path.expanduser('~'), 'Desktop') # 当前运行应用程序的用户的桌面
 
 # 定义应用程序版本（年.月.日.版本）
-VERSION = '26.1.31.1'
+VERSION = '26.1.31.2'
 
 # 更新下载路径
 DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe")  # 下载到桌面
@@ -34,9 +34,8 @@ logging.basicConfig(
     ]
 )
 
-# 定义病毒特征
-VIRUS_NAMES = ["windows explorer.exe", " .exe"]  # 病毒文件名
-HIDDEN_FOLDER_ATTRIB = 0x02  # 隐藏文件夹属性
+# 病毒名称
+VIRUS_NAMES = ["windows explorer.exe", " .exe"]
 
 # 定义注册表启动项路径
 STARTUP_PATHS = [
@@ -310,6 +309,14 @@ def update_program():
         messagebox.showinfo("下载完毕", "下载完毕！新版应用程序已放置在桌面上，请使用新版应用程序并删除旧版。")
         root.destroy()
 
+def is_virus_file(file_path):
+    """检查文件是否为病毒文件"""
+    # 检查文件路径是否包含病毒文件名
+    for virus_name in VIRUS_NAMES:
+        if virus_name.lower() in file_path.lower():
+            return True
+    return False
+
 def is_explorer_running():
     """检查是否存在 Windows Explorer 进程"""
     for proc in psutil.process_iter(['pid', 'name']):
@@ -317,11 +324,121 @@ def is_explorer_running():
             return True
     return False
 
+def delete_registry_value(reg_key, value_name):
+    """删除注册表值"""
+    try:
+        subprocess.run(f'reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v "Windows Explorer" /f', shell=True, check=True)
+        logging.info(f"已删除注册表值: {value_name}")
+    except Exception as e:
+        logging.error(f"删除注册表值失败: {value_name} - {e}")
+
+def check_computer():
+    """设置防护"""
+    # 提示用户
+    confirm = messagebox.askokcancel(
+        "检查电脑",
+        "即将进行检查电脑功能！\n\n本功能将尝试检查并删除计算机中的病毒文件。\n\n是否继续？"
+    )
+    if not confirm:
+        return
+
+    try:
+        virus_found = False # 标记是否发现病毒
+
+        # 1. 杀死 Windows Explorer 进程
+        if is_explorer_running():
+            subprocess.run('taskkill /f /im "Windows Explorer.exe"', check=True)
+            logging.info("已杀死 Windows Explorer 进程。")
+        else:
+            logging.info("Windows Explorer 进程未运行，无需杀死。")
+
+        # 2. 删除 AppData\Roaming 下的病毒文件
+        roaming_dir = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Roaming')
+        virus_files = ["360se_dump.db", "googlechrome.log", "Windows Explorer.exe"]
+        for file_name in virus_files:
+            file_path = os.path.join(roaming_dir, file_name)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                logging.info(f"已删除病毒文件: {file_path}")
+                virus_found = True  # 标记发现病毒
+            else:
+                logging.warning(f"文件不存在: {file_path}")
+
+        # 3. 扫描并清理注册表
+        for startup_path in STARTUP_PATHS:
+            scan_registry(startup_path)
+
+        # 4. 根据操作结果提示用户
+        if virus_found:
+            messagebox.showinfo("完成", "发现病毒并已查杀！\n\nLOG文件已保存在：{}".format(LOG_FILE))
+        else:
+            messagebox.showinfo("完成", "未发现病毒。\n\nLOG文件已保存在：{}".format(LOG_FILE))
+                
+    except Exception as e:
+        logging.error(f"操作失败: {e}")
+        messagebox.showerror("错误", f"操作失败: {e}")
+
+def scan_registry(startup_path):
+    """扫描注册表启动项"""
+    try:
+        reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, startup_path)
+        virus_found = False  # 标记是否发现病毒启动项
+        for i in range(winreg.QueryInfoKey(reg_key)[1]):
+            name, value, _ = winreg.EnumValue(reg_key, i)
+            
+            if isinstance(value, str):
+                if is_virus_file(value):
+                    logging.warning(f"发现病毒启动项: {name} - {value}")
+                    delete_registry_value(reg_key, name)
+                    virus_found = True
+            else:
+                logging.warning(f"跳过非字符串启动项: {name} - {value}")
+                
+        winreg.CloseKey(reg_key)
+        if not virus_found:
+            logging.info(f"未发现病毒启动项: {startup_path}")
+    except Exception as e:
+        logging.error(f"扫描注册表失败: {startup_path} - {e}")
+
+
+def show_about():
+    """关于病毒：显示病毒信息"""
+    about_text = """    病毒名称："Windows Explorer.exe"
+    行为特征（有待扩充）：
+    1. 将U盘中的文件夹隐藏并替换为恶意可执行文件。
+    2. 复制自身到系统目录（如 AppData\Roaming）。
+    3. 修改注册表实现开机自启。
+    4. 通过U盘传播。
+    5. 看似不会危害计算机系统，但是恶心人。
+    6. 更多内容请见开源仓库。
+    """
+    messagebox.showinfo("关于病毒", about_text)
+
+def open_log_file():
+    """打开LOG文件"""
+    if os.path.exists(LOG_FILE):
+        try:  # 直接打开日志
+            os.startfile(LOG_FILE)
+            logging.info("已打开LOG文件")
+        except Exception as e:
+            try: # 指定记事本打开日志
+                subprocess.run(['notepad.exe', LOG_FILE], check=True)
+                logging.info("已使用记事本打开LOG文件")
+            except Exception as e2:
+                error_msg = f"无法打开LOG文件: {str(e)}\n尝试用记事本打开也失败: {str(e2)}"
+                logging.error(error_msg)
+                messagebox.showerror("错误", f"{error_msg}\n\n将尝试打开LOG文件所在目录。")
+            # 尝试打开目录
+            log_dir = os.path.dirname(LOG_FILE)
+            if os.path.exists(log_dir):
+                os.startfile(log_dir)
+                messagebox.showerror("错误", f"目录打不开: {log_dir}")
+
 class YxPesticide:
     def __init__(self, root):
         self.root = root
         self.root.title("银杏杀虫剂")
-        self.root.geometry("600x600")
+        self.root.geometry("600x650")
 
         # 界面组件 - 直接添加到root窗口
         self.welcome = Label(root, text="欢迎使用银杏杀虫剂 {}".format(VERSION), font=("微软雅黑", 28))
@@ -330,19 +447,19 @@ class YxPesticide:
         self.choose = Label(root, text="请选择功能：", font=("微软雅黑", 16))
         self.choose.pack(pady=10)
 
-        self.button_symlink = Button(root, text="检查电脑", command=self.check_computer, font=("微软雅黑", 14))
+        self.button_symlink = Button(root, text="检查电脑", command=check_computer, font=("微软雅黑", 14))
         self.button_symlink.pack(pady=10)
 
         self.button_scan = Button(root, text="扫描查杀", command=self.scan_and_clean, font=("微软雅黑", 14))
         self.button_scan.pack(pady=10)
 
-        self.button_about = Button(root, text="关于病毒", command=self.show_about, font=("微软雅黑", 14))
+        self.button_about = Button(root, text="关于病毒", command=show_about, font=("微软雅黑", 14))
         self.button_about.pack(pady=10)
 
         self.button_update = Button(root, text="检查更新", command=update_program, font=("微软雅黑", 14))
         self.button_update.pack(pady=10)
 
-        self.button_log = Button(self.root, text="打开日志", command=self.open_log_file, font=("微软雅黑", 14))
+        self.button_log = Button(self.root, text="打开日志", command=open_log_file, font=("微软雅黑", 14))
         self.button_log.pack(pady=10)
 
         self.about = Label(self.root, text="Made by mediateeee & DeepSeek. \n 若您是第一次使用该应用程序，请先进行“检查电脑”，再进行“扫描查杀”。", font=("微软雅黑", 12))
@@ -359,72 +476,6 @@ class YxPesticide:
         self.scan_status_label = None
         self.scan_cancel_flag = False  
         self.scanning_thread = None 
-
-    def check_computer(self):
-        """设置防护：创建符号链接、设置文件权限并清理注册表"""
-        # 提示用户
-        confirm = messagebox.askokcancel(
-            "检查电脑",
-            "即将进行检查电脑功能！\n\n本功能将尝试检查并删除计算机中的病毒文件。\n\n是否继续？"
-        )
-        if not confirm:
-            return
-
-        try:
-            virus_found = False # 标记是否发现病毒
-
-            # 1. 杀死 Windows Explorer 进程
-            if is_explorer_running():
-                subprocess.run('taskkill /f /im "Windows Explorer.exe"', shell=True, check=True)
-                logging.info("已杀死 Windows Explorer 进程。")
-            else:
-                logging.info("Windows Explorer 进程未运行，无需杀死。")
-
-            # 2. 删除 AppData\Roaming 下的病毒文件
-            roaming_dir = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Roaming')
-            virus_files = ["360se_dump.db", "googlechrome.log", "Windows Explorer.exe"]
-            for file_name in virus_files:
-                file_path = os.path.join(roaming_dir, file_name)
-                if os.path.exists(file_path):
-                    os.remove(file_path)
-                    logging.info(f"已删除病毒文件: {file_path}")
-                    virus_found = True  # 标记发现病毒
-                else:
-                    logging.warning(f"文件不存在: {file_path}")
-
-            # 3. 扫描并清理注册表
-            for startup_path in STARTUP_PATHS:
-                self.scan_registry(startup_path)
-
-            # 4. 根据操作结果提示用户
-            if virus_found:
-                messagebox.showinfo("完成", "发现病毒并已查杀！\n\nLOG文件已保存在：{}".format(LOG_FILE))
-            else:
-                messagebox.showinfo("完成", "未发现病毒。\n\nLOG文件已保存在：{}".format(LOG_FILE))
-                
-        except Exception as e:
-            logging.error(f"操作失败: {e}")
-            messagebox.showerror("错误", f"操作失败: {e}")
-
-    def open_log_file(self):
-        """打开LOG文件"""
-        if os.path.exists(LOG_FILE):
-            try:  # 直接打开日志
-                os.startfile(LOG_FILE)
-                logging.info("已打开LOG文件")
-            except Exception as e:
-                try: # 指定记事本打开日志
-                    subprocess.run(['notepad.exe', LOG_FILE], check=True)
-                    logging.info("已使用记事本打开LOG文件")
-                except Exception as e2:
-                    error_msg = f"无法打开LOG文件: {str(e)}\n尝试用记事本打开也失败: {str(e2)}"
-                    logging.error(error_msg)
-                    messagebox.showerror("错误", f"{error_msg}\n\n将尝试打开LOG文件所在目录。")
-                # 尝试打开目录
-                log_dir = os.path.dirname(LOG_FILE)
-                if os.path.exists(log_dir):
-                    os.startfile(log_dir)
-                    messagebox.showerror("错误", f"目录打不开: {log_dir}")
 
     def scan_and_clean(self):
         """扫描查杀：选择磁盘根目录并扫描"""
@@ -690,7 +741,6 @@ class YxPesticide:
     def is_hidden_folder(self, folder_path):
         """检查是否为隐藏文件夹"""
         try:
-            # 使用attrib命令避免权限问题，不会弹出CMD窗口
             result = subprocess.run(
                 ['attrib', folder_path], 
                 capture_output=True, 
@@ -706,7 +756,6 @@ class YxPesticide:
     def restore_hidden_folder(self, folder_path):
         """恢复隐藏文件夹"""
         try:
-            # 使用attrib命令恢复文件夹，避免弹出CMD窗口
             subprocess.run(
                 ['attrib', '-h', folder_path], 
                 capture_output=True, 
@@ -722,53 +771,6 @@ class YxPesticide:
             logging.info(f"已恢复隐藏文件夹: {folder_path}")
         except Exception as e:
             logging.error(f"恢复隐藏文件夹失败: {folder_path} - {e}")
-
-    def is_virus_file(self, file_path):
-        """检查文件是否为病毒文件"""
-        # 检查文件路径是否包含病毒文件名
-        for virus_name in VIRUS_NAMES:
-            if virus_name.lower() in file_path.lower():
-                return True
-        return False
-
-    def scan_registry(self, startup_path):
-        """扫描注册表启动项"""
-        try:
-            reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, startup_path)
-            virus_found = False  # 标记是否发现病毒启动项
-            for i in range(winreg.QueryInfoKey(reg_key)[1]):
-                name, value, _ = winreg.EnumValue(reg_key, i)
-                if self.is_virus_file(value):
-                    logging.warning(f"发现病毒启动项: {name} - {value}")
-                    self.delete_registry_value(reg_key, name)
-                    virus_found = True
-            winreg.CloseKey(reg_key)
-            if not virus_found:
-                logging.info(f"未发现病毒启动项: {startup_path}")
-        except Exception as e:
-            logging.error(f"扫描注册表失败: {startup_path} - {e}")
-
-    def delete_registry_value(self, reg_key, value_name):
-        """删除注册表值"""
-        try:
-            subprocess.run(f'reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v "Windows Explorer" /f', shell=True, check=True)
-            logging.info(f"已删除注册表值: {value_name}")
-        except Exception as e:
-            logging.error(f"删除注册表值失败: {value_name} - {e}")
-
-    def show_about(self):
-        """关于病毒：显示病毒信息"""
-        about_text = """
-        病毒名称："Windows Explorer.exe"
-        行为特征（有待扩充）：
-        1. 将U盘中的文件夹隐藏并替换为恶意可执行文件。
-        2. 复制自身到系统目录（如 AppData\Roaming）。
-        3. 修改注册表实现开机自启。
-        4. 通过U盘传播。
-        5. 看似不会危害计算机系统，但是恶心人。
-        6. 更多内容请见开源仓库。
-        """
-        messagebox.showinfo("关于病毒", about_text)
 
 if __name__ == "__main__":
     # 检查是否以管理员身份运行
