@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 import os
-import winreg
 import logging
 import subprocess
 import ctypes
@@ -8,7 +7,6 @@ import sys
 import time
 import requests
 import json
-import psutil
 import threading
 import tkinter as tk
 from tkinter import Tk, Button, Label, messagebox, filedialog, ttk
@@ -19,7 +17,7 @@ LOG_FILE = os.path.join(PROGRAM_DIR, '我是主程序LOG.log') # LOG文件目录
 DESKTOP_DIR = os.path.join(os.path.expanduser('~'), 'Desktop') # 当前运行应用程序的用户的桌面
 
 # 定义应用程序版本（年.月.日.版本）
-VERSION = '26.1.31.2'
+VERSION = '26.1.31.3'
 
 # 更新下载路径
 DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe")  # 下载到桌面
@@ -34,59 +32,53 @@ logging.basicConfig(
     ]
 )
 
-# 病毒名称
-VIRUS_NAMES = ["windows explorer.exe", " .exe"]
-
-# 定义注册表启动项路径
-STARTUP_PATHS = [
-    r"Software\Microsoft\Windows\CurrentVersion\Run",
-    r"Software\Microsoft\Windows\CurrentVersion\RunOnce",
-]
-
 # Gitee API 信息
 GITEE_API_URL = f"https://gitee.com/api/v5/repos/mediateeee/yx-pesticide/releases/latest"
 
-def is_admin():
-    """检查是否以管理员身份运行"""
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
-
+# 以管理员程序运行模块
 def run_as_admin():
     """以管理员身份重新运行程序"""
+    def is_admin():
+        """检查是否以管理员身份运行"""
+        try:
+           return ctypes.windll.shell32.IsUserAnAdmin()
+        except:
+            return False
+
     if not is_admin():
         # 使用 ShellExecuteW 提权运行
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
         # 退出当前进程
         sys.exit()
 
-def compare_versions(current_version, latest_version):
-    """
-    比较版本号，判断是否需要更新
-    版本号格式为: 年.月.日.版本 (例如: 25.3.16.7)
-    """
-    try:
-        current_parts = list(map(int, current_version.split('.')))
-        latest_parts = list(map(int, latest_version.split('.')))
-        
-        # 确保版本号有4个部分，不足的补0
-        while len(current_parts) < 4:
-            current_parts.append(0)
-        while len(latest_parts) < 4:
-            latest_parts.append(0)
-        
-        # 从主版本号开始逐级比较
-        for i in range(4):
-            if latest_parts[i] > current_parts[i]:
-                return True  # 需要更新
-            elif latest_parts[i] < current_parts[i]:
-                return False  # 不需要更新
-        
-        return False  # 版本号完全相同，不需要更新
-    except Exception as e:
-        logging.error(f"版本号比较失败: {e}")
-        return False
+# 软件更新模块
+def update_program():
+    """更新程序主逻辑"""
+    # 检查更新
+    update_info = check_for_updates()
+    if not update_info:
+        return
+
+    latest_version, download_url, update_log = update_info
+
+    # 弹出提示框询问用户是否更新
+    root = Tk()
+    root.withdraw()
+    confirm = messagebox.askyesno("检查到更新", 
+                                f"当前版本: {VERSION}\n最新版本: {latest_version}\n\n是否立即更新？ 注意，如果点击下载没反应，请查看桌面上是不是有一个叫做“更新版本的银杏杀虫剂”的软件？如果是，请给他改个名字再下载更新。\n\n更新日志：\n{update_log}")
+    root.destroy()
+
+    if not confirm:
+        logging.info("用户取消更新。")
+        return
+
+    # 提示完成
+    if download_update(download_url):
+        # 提示用户手动重启
+        root = Tk()
+        root.withdraw()
+        messagebox.showinfo("下载完毕", "下载完毕！新版应用程序已放置在桌面上，请使用新版应用程序并删除旧版。")
+        root.destroy()
 
 def check_for_updates():
     """检查是否有新版本"""
@@ -117,13 +109,48 @@ def check_for_updates():
                 break
 
         if not download_url:
-            logging.error("未找到可执行文件的下载链接")
+            logging.error("没能找到更新文件的下载链接")
             return None
 
         return latest_version, download_url, update_log
     except Exception as e:
         logging.error(f"检查更新失败：{e}")
         return None
+
+def compare_versions(current_version, latest_version):
+    """
+    比较版本号，判断是否需要更新
+    版本号格式为: 年.月.日.版本 (例如: 25.3.16.7)
+    """
+    try:
+        current_parts = list(map(int, current_version.split('.')))
+        latest_parts = list(map(int, latest_version.split('.')))
+        
+        # 确保版本号有4个部分，不足的补0
+        while len(current_parts) < 4:
+            current_parts.append(0)
+        while len(latest_parts) < 4:
+            latest_parts.append(0)
+        
+        # 从主版本号开始逐级比较
+        for i in range(4):
+            if latest_parts[i] > current_parts[i]:
+                return True  # 需要更新
+            elif latest_parts[i] < current_parts[i]:
+                return False  # 不需要更新
+        
+        return False  # 版本号完全相同，不需要更新
+    except Exception as e:
+        logging.error(f"版本号比较失败: {e}")
+        return False
+
+def format_size(size):
+    """格式化文件大小"""
+    for unit in ['B', 'KB', 'MB', 'GB']:
+        if size < 1024.0:
+            return f"{size:.2f} {unit}"
+        size /= 1024.0
+    return f"{size:.2f} TB"
 
 def download_update(download_url):
     """下载最新版本并显示进度条和实时信息"""
@@ -273,67 +300,9 @@ def download_update(download_url):
             except:
                 pass
 
-def format_size(size):
-    """格式化文件大小"""
-    for unit in ['B', 'KB', 'MB', 'GB']:
-        if size < 1024.0:
-            return f"{size:.2f} {unit}"
-        size /= 1024.0
-    return f"{size:.2f} TB"
-
-def update_program():
-    """更新程序主逻辑"""
-    # 检查更新
-    update_info = check_for_updates()
-    if not update_info:
-        return
-
-    latest_version, download_url, update_log = update_info
-
-    # 弹出提示框询问用户是否更新
-    root = Tk()
-    root.withdraw()
-    confirm = messagebox.askyesno("检查到更新", 
-                                f"当前版本: {VERSION}\n最新版本: {latest_version}\n\n是否立即更新？ 注意，如果点击下载没反应，请查看桌面上是不是有一个叫做“更新版本的银杏杀虫剂”的软件？如果是，请给他改个名字再下载更新。\n\n更新日志：\n{update_log}")
-    root.destroy()
-
-    if not confirm:
-        logging.info("用户取消更新。")
-        return
-
-    # 提示完成
-    if download_update(download_url):
-        # 提示用户手动重启
-        root = Tk()
-        root.withdraw()
-        messagebox.showinfo("下载完毕", "下载完毕！新版应用程序已放置在桌面上，请使用新版应用程序并删除旧版。")
-        root.destroy()
-
-def is_virus_file(file_path):
-    """检查文件是否为病毒文件"""
-    # 检查文件路径是否包含病毒文件名
-    for virus_name in VIRUS_NAMES:
-        if virus_name.lower() in file_path.lower():
-            return True
-    return False
-
-def is_explorer_running():
-    """检查是否存在 Windows Explorer 进程"""
-    for proc in psutil.process_iter(['pid', 'name']):
-        if proc.info['name'] == 'Windows Explorer.exe':
-            return True
-    return False
-
-def delete_registry_value(reg_key, value_name):
-    """删除注册表值"""
-    try:
-        subprocess.run(f'reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v "Windows Explorer" /f', shell=True, check=True)
-        logging.info(f"已删除注册表值: {value_name}")
-    except Exception as e:
-        logging.error(f"删除注册表值失败: {value_name} - {e}")
-
+# 检查电脑模块
 def check_computer():
-    """设置防护"""
+    """检查电脑"""
     # 提示用户
     confirm = messagebox.askokcancel(
         "检查电脑",
@@ -346,11 +315,25 @@ def check_computer():
         virus_found = False # 标记是否发现病毒
 
         # 1. 杀死 Windows Explorer 进程
-        if is_explorer_running():
-            subprocess.run('taskkill /f /im "Windows Explorer.exe"', check=True)
-            logging.info("已杀死 Windows Explorer 进程。")
-        else:
-            logging.info("Windows Explorer 进程未运行，无需杀死。")
+        try:
+            result = subprocess.run(
+                'taskkill /f /im "Windows Explorer.exe"',
+                shell=True,
+                capture_output=True,
+                text=True,
+                creationflags=subprocess.CREATE_NO_WINDOW
+            )
+            if result.returncode == 0:
+                logging.info("已杀死 Windows Explorer 进程。")
+            elif result.returncode == 128:
+                logging.info("Windows Explorer 进程未运行，无需杀死。")
+            else:
+                error_msg = f"终止Windows Explorer进程时出错: 返回码{result.returncode}"
+                if result.stderr:
+                    error_msg += f", 错误信息: {result.stderr.strip()}"
+                logging.error(error_msg)
+        except Exception as e:
+            logging.error(f"检查Windows Explorer进程时发生异常: {e}")
 
         # 2. 删除 AppData\Roaming 下的病毒文件
         roaming_dir = os.path.join(os.environ['USERPROFILE'], 'AppData', 'Roaming')
@@ -365,9 +348,26 @@ def check_computer():
                 logging.warning(f"文件不存在: {file_path}")
 
         # 3. 扫描并清理注册表
-        for startup_path in STARTUP_PATHS:
-            scan_registry(startup_path)
-
+        try:
+            # 尝试删除注册表项
+            result = subprocess.run(
+                'reg delete "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run" /v "Windows Explorer" /f', 
+                shell=True, 
+                capture_output=True, 
+                text=True,
+                creationflags=subprocess.CREATE_NO_WINDOW
+            )
+                
+            if result.returncode == 0:
+                logging.info('已删除注册表项: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run 下的 "Windows Explorer" 项')
+            elif "错误: 系统找不到指定的注册表项或值。" in result.stderr:
+                logging.info('这个注册表项不存在: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run 下的 "Windows Explorer" 项')
+            else:
+                logging.error('删除注册表项失败: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run 下的 "Windows Explorer" 项')
+                    
+        except Exception as e:
+            logging.error('在处理注册表项时出错: {e}')
+        
         # 4. 根据操作结果提示用户
         if virus_found:
             messagebox.showinfo("完成", "发现病毒并已查杀！\n\nLOG文件已保存在：{}".format(LOG_FILE))
@@ -378,29 +378,7 @@ def check_computer():
         logging.error(f"操作失败: {e}")
         messagebox.showerror("错误", f"操作失败: {e}")
 
-def scan_registry(startup_path):
-    """扫描注册表启动项"""
-    try:
-        reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, startup_path)
-        virus_found = False  # 标记是否发现病毒启动项
-        for i in range(winreg.QueryInfoKey(reg_key)[1]):
-            name, value, _ = winreg.EnumValue(reg_key, i)
-            
-            if isinstance(value, str):
-                if is_virus_file(value):
-                    logging.warning(f"发现病毒启动项: {name} - {value}")
-                    delete_registry_value(reg_key, name)
-                    virus_found = True
-            else:
-                logging.warning(f"跳过非字符串启动项: {name} - {value}")
-                
-        winreg.CloseKey(reg_key)
-        if not virus_found:
-            logging.info(f"未发现病毒启动项: {startup_path}")
-    except Exception as e:
-        logging.error(f"扫描注册表失败: {startup_path} - {e}")
-
-
+# 关于病毒和打开日志模块
 def show_about():
     """关于病毒：显示病毒信息"""
     about_text = """    病毒名称："Windows Explorer.exe"
@@ -434,6 +412,7 @@ def open_log_file():
                 os.startfile(log_dir)
                 messagebox.showerror("错误", f"目录打不开: {log_dir}")
 
+# UI模块
 class YxPesticide:
     def __init__(self, root):
         self.root = root
