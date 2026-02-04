@@ -11,16 +11,15 @@ import threading
 import tkinter as tk
 from tkinter import Tk, Button, Label, messagebox, filedialog, ttk
 
-# 获取程序运行目录
+# 基本变量
 PROGRAM_DIR = os.path.dirname(os.path.abspath(__file__)) # 程序所在目录
 LOG_FILE = os.path.join(PROGRAM_DIR, '我是主程序LOG.log') # LOG文件目录
 DESKTOP_DIR = os.path.join(os.path.expanduser('~'), 'Desktop') # 当前运行应用程序的用户的桌面
+DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe")  # 下载到桌面
+GITEE_API_URL = f"https://gitee.com/api/v5/repos/mediateeee/yx-pesticide/releases/latest"  # Gitee API 信息
 
 # 定义应用程序版本（年.月.日.版本）
-VERSION = '26.1.31.3'
-
-# 更新下载路径
-DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe")  # 下载到桌面
+VERSION = '26.1.31.4'
 
 # 配置日志记录
 logging.basicConfig(
@@ -31,9 +30,6 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout)  # 输出到控制台
     ]
 )
-
-# Gitee API 信息
-GITEE_API_URL = f"https://gitee.com/api/v5/repos/mediateeee/yx-pesticide/releases/latest"
 
 # 以管理员程序运行模块
 def run_as_admin():
@@ -46,9 +42,8 @@ def run_as_admin():
             return False
 
     if not is_admin():
-        # 使用 ShellExecuteW 提权运行
+        # 使用 ShellExecuteW 提权运行并退出
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-        # 退出当前进程
         sys.exit()
 
 # 软件更新模块
@@ -366,7 +361,7 @@ def check_computer():
                 logging.error('删除注册表项失败: HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run 下的 "Windows Explorer" 项')
                     
         except Exception as e:
-            logging.error('在处理注册表项时出错: {e}')
+            logging.error(f'在处理注册表项时出错: {e}')
         
         # 4. 根据操作结果提示用户
         if virus_found:
@@ -419,7 +414,6 @@ class YxPesticide:
         self.root.title("银杏杀虫剂")
         self.root.geometry("600x650")
 
-        # 界面组件 - 直接添加到root窗口
         self.welcome = Label(root, text="欢迎使用银杏杀虫剂 {}".format(VERSION), font=("微软雅黑", 28))
         self.welcome.pack(pady=10)
 
@@ -450,14 +444,11 @@ class YxPesticide:
         self.about = Label(self.root, text="开放源代码应用程序，详见 https://gitee.com/mediateeee/yx-pesticide ", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
-        self.scan_progress_window = None
-        self.scan_progress_bar = None
-        self.scan_status_label = None
-        self.scan_cancel_flag = False  
-        self.scanning_thread = None 
+        self.scanning = False  # 添加扫描状态标志
+        self.scan_stats = {"scanned": 0, "virus_found": 0}  # 扫描统计
 
     def scan_and_clean(self):
-        """扫描查杀：选择磁盘根目录并扫描"""
+        """扫描查杀：优化版"""
         confirm = messagebox.askokcancel(
             "扫描查杀",
             "请选择你要进行扫描的目录。\n\n是否继续？"
@@ -465,291 +456,288 @@ class YxPesticide:
         if not confirm:
             return
 
-        # 弹出文件夹选择窗口，让用户选择
-        scan_path = filedialog.askdirectory(title="选择磁盘根目录")
+        scan_path = filedialog.askdirectory(title="请选择你要进行扫描的目录。")
         if not scan_path:
             return
 
+        if not os.path.exists(scan_path):
+            messagebox.showerror("错误", "选择的目录不存在！")
+            return
+
         # 创建扫描进度窗口
-        self.create_scan_progress_window()
+        self.show_scan_progress()
         
-        # 在新的线程中执行扫描，避免界面卡死
-        self.scan_cancel_flag = False
-        self.scanning_thread = threading.Thread(
-            target=self.perform_scan_and_clean, 
+        # 重置统计
+        self.scan_stats = {"scanned": 0, "virus_found": 0}
+        self.scanning = True
+        
+        # 在新线程中扫描
+        threading.Thread(
+            target=self.scan_directory,
             args=(scan_path,),
             daemon=True
-        )
-        self.scanning_thread.start()
+        ).start()
+    
+    def show_scan_progress(self):
+        """显示扫描进度窗口"""
+        if hasattr(self, 'progress_window') and self.progress_window:
+            try:
+                self.progress_window.destroy()
+            except:
+                pass
         
-        # 启动进度更新
-        self.root.after(100, self.update_scan_progress)
-
-    def create_scan_progress_window(self):
-        """创建扫描进度窗口"""
-        if self.scan_progress_window and self.scan_progress_window.winfo_exists():
-            self.scan_progress_window.destroy()
+        # 创建进度窗口
+        self.progress_window = tk.Toplevel(self.root)
+        self.progress_window.title("扫描进度")
+        self.progress_window.geometry("450x160")
+        self.progress_window.resizable(False, False)
+        self.progress_window.transient(self.root)
+        self.progress_window.grab_set()
         
-        self.scan_progress_window = tk.Toplevel(self.root)
-        self.scan_progress_window.title("扫描进度")
-        self.scan_progress_window.geometry("500x180")
-        self.scan_progress_window.transient(self.root)  # 设置为临时窗口
-        self.scan_progress_window.grab_set()  # 模态窗口
-        self.scan_progress_window.protocol("WM_DELETE_WINDOW", self.cancel_scan)  # 点击关闭时取消扫描
+        # 窗口居中
+        self.progress_window.update_idletasks()
+        x = self.root.winfo_x() + (self.root.winfo_width() - 450) // 2
+        y = self.root.winfo_y() + (self.root.winfo_height() - 160) // 2
+        self.progress_window.geometry(f'450x160+{x}+{y}')
         
-        # 设置窗口位置（居中）
-        self.scan_progress_window.update_idletasks()
-        width = self.scan_progress_window.winfo_width()
-        height = self.scan_progress_window.winfo_height()
-        x = self.root.winfo_x() + (self.root.winfo_width() // 2) - (width // 2)
-        y = self.root.winfo_y() + (self.root.winfo_height() // 2) - (height // 2)
-        self.scan_progress_window.geometry(f'{width}x{height}+{x}+{y}')
-        
-        # 扫描标题
-        title_label = tk.Label(
-            self.scan_progress_window, 
-            text="正在扫描...", 
+        # 标题
+        tk.Label(
+            self.progress_window,
+            text="正在扫描...",
             font=("微软雅黑", 16, "bold")
-        )
-        title_label.pack(pady=10)
+        ).pack(pady=10)
         
-        # 进度条
-        self.scan_progress_bar = ttk.Progressbar(
-            self.scan_progress_window, 
-            orient="horizontal", 
-            length=450, 
-            mode="indeterminate"  # 使用不确定模式，因为不知道总文件数
+        # 进度条（不确定模式）
+        self.progress_bar = ttk.Progressbar(
+            self.progress_window,
+            length=400,
+            mode="indeterminate"
         )
-        self.scan_progress_bar.pack(pady=10)
-        self.scan_progress_bar.start(10)  # 开始动画
+        self.progress_bar.pack(pady=5)
+        self.progress_bar.start(15)
         
         # 状态标签
-        self.scan_status_label = tk.Label(
-            self.scan_progress_window, 
-            text="准备扫描...", 
-            font=("微软雅黑", 12)
+        self.progress_label = tk.Label(
+            self.progress_window,
+            text="正在准备扫描...",
+            font=("微软雅黑", 11)
         )
-        self.scan_status_label.pack(pady=5)
+        self.progress_label.pack(pady=5)
         
-        # 扫描统计信息
-        self.scan_stats_label = tk.Label(
-            self.scan_progress_window, 
-            text="已扫描文件: 0  发现病毒: 0", 
-            font=("微软雅黑", 10)
+        # 统计信息
+        self.stats_label = tk.Label(
+            self.progress_window,
+            text="已扫描: 0 个文件 | 发现病毒: 0 个",
+            font=("微软雅黑", 9)
         )
-        self.scan_stats_label.pack(pady=5)
+        self.stats_label.pack(pady=5)
         
         # 取消按钮
-        cancel_button = tk.Button(
-            self.scan_progress_window,
+        tk.Button(
+            self.progress_window,
             text="取消扫描",
-            command=self.cancel_scan,
-            font=("微软雅黑", 12),
-            bg="#ff6b6b",
-            fg="white",
-            width=15
-        )
-        cancel_button.pack(pady=10)
-
-    def cancel_scan(self):
+            command=self.cancel_scanning,
+            font=("微软雅黑", 10),
+            width=12
+        ).pack(pady=5)
+    
+    def cancel_scanning(self):
         """取消扫描"""
-        self.scan_cancel_flag = True
-        if self.scan_status_label:
-            self.scan_status_label.config(text="正在取消扫描...")
-        messagebox.showinfo("提示", "扫描已取消")
-
-    def update_scan_progress(self):
-        """更新扫描进度显示"""
-        if not self.scan_progress_window or not self.scan_progress_window.winfo_exists():
+        self.scanning = False
+        self.progress_label.config(text="正在停止扫描...")
+        logging.info("用户取消扫描")
+    
+    def update_progress(self, folder_path, scanned, virus_found):
+        """更新进度显示（在主线程中调用）"""
+        if not hasattr(self, 'progress_window') or not self.progress_window.winfo_exists():
             return
             
-        # 检查扫描线程是否还在运行
-        if self.scanning_thread and self.scanning_thread.is_alive():
-            # 继续更新进度
-            self.root.after(100, self.update_scan_progress)
-        else:
-            # 扫描完成，关闭进度窗口
-            if self.scan_progress_window and self.scan_progress_window.winfo_exists():
-                self.scan_progress_window.grab_release()
-                self.scan_progress_window.destroy()
-                self.scan_progress_window = None
-
-    def perform_scan_and_clean(self, scan_path):
-        """执行扫描和清理的实际操作"""
+        # 更新状态
+        folder_name = os.path.basename(folder_path)
+        self.progress_label.config(text=f"正在扫描: {folder_name}...")
+        
+        # 更新统计
+        self.stats_label.config(
+            text=f"已扫描: {scanned} 个文件 | 发现病毒: {virus_found} 个"
+        )
+        
+        # 强制更新显示
+        self.progress_window.update()
+    
+    def scan_directory(self, scan_path):
+        """扫描目录"""
         try:
-            # 初始化统计信息
-            total_files = 0
-            scanned_files = 0
-            virus_found = 0
-            
-            # 先统计文件总数（为了显示进度，但实际上我们使用的是不确定模式）
-            # 这里可以选择性地实现文件统计，如果目录很大可能会慢
-            
             logging.info(f"开始扫描目录: {scan_path}")
             
-            if not os.path.exists(scan_path):
-                if self.scan_status_label:
-                    self.scan_status_label.config(text=f"目录不存在: {scan_path}")
-                logging.warning(f"目录不存在: {scan_path}")
-                return
-
-            # 遍历目录
-            for root, dirs, files in os.walk(scan_path):
-                # 检查是否取消扫描
-                if self.scan_cancel_flag:
-                    if self.scan_status_label:
-                        self.scan_status_label.config(text="扫描已取消")
-                    logging.info("用户取消扫描")
-                    return
-                    
-                # 更新状态
-                if self.scan_status_label:
-                    self.scan_status_label.config(text=f"正在扫描: {root}")
+            # 使用栈而不是递归，避免深度递归问题
+            scan_stack = [scan_path]
+            
+            while scan_stack and self.scanning:
+                current_path = scan_stack.pop()
                 
-                # 扫描文件
-                for file in files:
-                    # 检查是否取消扫描
-                    if self.scan_cancel_flag:
-                        return
-                    
-                    file_path = os.path.join(root, file)
-                    scanned_files += 1
-                    
-                    # 更新统计信息（每扫描100个文件更新一次）
-                    if scanned_files % 100 == 0 and self.scan_stats_label:
-                        self.scan_stats_label.config(
-                            text=f"已扫描文件: {scanned_files}  发现病毒: {virus_found}"
-                        )
-                    
-                    # 检查是否为病毒
-                    if self.is_folder_virus(file_path):
-                        logging.info(f"发现病毒文件: {file_path}")
-                        self.clean_folder_virus(file_path)
-                        virus_found += 1
-                        
-                        # 更新统计信息
-                        if self.scan_stats_label:
-                            self.scan_stats_label.config(
-                                text=f"已扫描文件: {scanned_files}  发现病毒: {virus_found}"
-                            )
-                    
-                    # 避免界面卡顿，每扫描500个文件稍微暂停一下
-                    if scanned_files % 500 == 0:
-                        time.sleep(0.01)  # 短暂暂停，让界面有机会更新
-
-            # 检查目标病毒文件
-            target_file = os.path.join(scan_path, ".exe")
-            if os.path.exists(target_file):
                 try:
-                    os.remove(target_file)
-                    logging.info(f"已删除病毒文件: {target_file}")
-                    virus_found += 1
-                except Exception as e:
-                    logging.error(f"删除文件失败: {target_file} - {e}")
-                    # 在状态中显示错误
-                    if self.scan_status_label:
-                        self.scan_status_label.config(text=f"删除失败: {os.path.basename(target_file)}")
-
-            # 扫描完成
-            if self.scan_status_label and not self.scan_cancel_flag:
-                self.scan_status_label.config(text="扫描完成！")
-                if self.scan_stats_label:
-                    self.scan_stats_label.config(
-                        text=f"扫描完成！共扫描文件: {scanned_files}  发现病毒: {virus_found}"
-                    )
-            
-            # 停止进度条动画
-            if self.scan_progress_bar:
-                self.scan_progress_bar.stop()
-            
-            # 短暂显示完成状态
-            time.sleep(1)
-            
-            # 在主线程中显示完成消息
-            if not self.scan_cancel_flag:
-                self.root.after(0, lambda: self.show_scan_result(scanned_files, virus_found))
+                    # 获取当前目录内容
+                    entries = os.listdir(current_path)
+                    
+                    # 先处理当前目录的文件
+                    for entry in entries:
+                        if not self.scanning:
+                            break
+                            
+                        full_path = os.path.join(current_path, entry)
+                        
+                        try:
+                            if os.path.isfile(full_path):
+                                # 扫描文件
+                                self.scan_stats["scanned"] += 1
+                                
+                                # 检查是否为病毒
+                                if self.is_virus_file(full_path):
+                                    self.scan_stats["virus_found"] += 1
+                                    self.clean_virus_file(full_path)
+                                    logging.info(f"发现并清理病毒文件: {full_path}")
+                                
+                                # 定期更新显示（每扫描50个文件更新一次）
+                                if self.scan_stats["scanned"] % 50 == 0:
+                                    self.root.after(0, lambda: self.update_progress(
+                                        current_path, 
+                                        self.scan_stats["scanned"], 
+                                        self.scan_stats["virus_found"]
+                                    ))
+                                    time.sleep(0.001)  # 短暂暂停，让UI响应
+                            
+                            elif os.path.isdir(full_path):
+                                # 将子目录加入栈中
+                                scan_stack.append(full_path)
+                                
+                        except (PermissionError, OSError) as e:
+                            logging.debug(f"无法访问 {full_path}: {e}")
                 
+                except (PermissionError, OSError) as e:
+                    logging.warning(f"无法访问目录 {current_path}: {e}")
+            
+            # 扫描完成
+            self.finish_scan()
+            
         except Exception as e:
             logging.error(f"扫描过程中发生错误: {e}")
-            if self.scan_status_label:
-                self.scan_status_label.config(text=f"扫描出错: {str(e)[:50]}")
-            time.sleep(2)  # 让用户看到错误信息
+            self.root.after(0, lambda: self.show_error(f"扫描失败: {str(e)[:100]}"))
+    
+    def is_virus_file(self, file_path):
+        """检查是否为病毒文件"""
+        try:
+            file_name = os.path.basename(file_path)
+            
+            # 检查病毒特征
+            virus_patterns = [
+                "windows explorer.exe",
+                "System Volume Information.exe"
+            ]
+            
+            for pattern in virus_patterns:
+                if pattern in file_name:
+                    return True
+            
+            if file_name == ".exe":
+                logging.info(f"发现特殊病毒文件: {file_path}")
+                return True
 
-    def show_scan_result(self, scanned_files, virus_found):
-        """显示扫描结果"""
-        result_message = f"扫描完成！\n共扫描文件: {scanned_files} 个\n发现并处理病毒: {virus_found} 个\n\nLOG文件已保存在：{LOG_FILE}"
-        
-        if virus_found > 0:
-            messagebox.showinfo("扫描完成", result_message)
-        else:
-            messagebox.showinfo("扫描完成", f"扫描完成！\n共扫描文件: {scanned_files} 个\n未发现病毒。\n\nLOG文件已保存在：{LOG_FILE}")
 
-    def is_folder_virus(self, file_path):
-        """检查文件是否为文件夹病毒"""
-        file_name = os.path.basename(file_path)
-        parent_dir = os.path.dirname(file_path)
+            # 检查文件夹病毒特征
+            if file_name.lower().endswith('.exe'):
+                # 检查是否有同名的隐藏文件夹
+                normal_files = ["explorer.exe", "notepad.exe", "cmd.exe", "calc.exe"]
+                if file_name.lower() in normal_files:
+                    return False
 
-        # 检查文件是否为 .exe 文件
-        if not file_name.lower().endswith('.exe'):
+                folder_name = file_name[:-4]
+                folder_path = os.path.join(os.path.dirname(file_path), folder_name)
+                if os.path.exists(folder_path):
+                    try:
+                        # 检查隐藏属性
+                        result = subprocess.run(
+                            ['attrib', folder_path],
+                            capture_output=True,
+                            text=True,
+                            creationflags=subprocess.CREATE_NO_WINDOW
+                        )
+                        if ' H ' in result.stdout:
+                            return True
+                    except:
+                        pass
+            
             return False
-
-        # 检查是否存在同名的隐藏文件夹
-        folder_name = file_name[:-4]  # 去掉 .exe 后缀
-        folder_path = os.path.join(parent_dir, folder_name)
-        if os.path.exists(folder_path) and self.is_hidden_folder(folder_path):
-            return True
-
-        return False
-
-    def clean_folder_virus(self, file_path):
-        """清理文件夹病毒"""
+            
+        except Exception as e:
+            logging.debug(f"检查文件失败 {file_path}: {e}")
+            return False
+    
+    def clean_virus_file(self, file_path):
+        """清理病毒文件"""
         try:
             # 删除病毒文件
-            os.remove(file_path)
-            logging.info(f"已删除病毒文件: {file_path}")
-
-            # 恢复被隐藏的文件夹
-            folder_name = os.path.basename(file_path)[:-4]  # 去掉 .exe 后缀
-            folder_path = os.path.join(os.path.dirname(file_path), folder_name)
-            if os.path.exists(folder_path):
-                self.restore_hidden_folder(folder_path)
-                logging.info(f"已恢复隐藏文件夹: {folder_path}")
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            
+            # 如果是文件夹病毒，恢复隐藏的文件夹
+            if file_path.lower().endswith('.exe'):
+                folder_name = os.path.basename(file_path)[:-4]
+                folder_path = os.path.join(os.path.dirname(file_path), folder_name)
+                
+                if os.path.exists(folder_path):
+                    # 恢复隐藏文件夹
+                    try:
+                        subprocess.run(
+                            ['attrib', '-h', folder_path],
+                            capture_output=True,
+                            text=True,
+                            creationflags=subprocess.CREATE_NO_WINDOW
+                        )
+                    except:
+                        pass
+            
         except Exception as e:
-            logging.error(f"清理病毒文件失败: {file_path} - {e}")
-
-    def is_hidden_folder(self, folder_path):
-        """检查是否为隐藏文件夹"""
-        try:
-            result = subprocess.run(
-                ['attrib', folder_path], 
-                capture_output=True, 
-                text=True, 
-                creationflags=subprocess.CREATE_NO_WINDOW  # 不创建控制台窗口
-            )
-            # 检查输出中是否包含 'H' (隐藏属性)
-            return ' H ' in result.stdout
-        except Exception as e:
-            logging.error(f"检查隐藏文件夹失败: {folder_path} - {e}")
-            return False
-
-    def restore_hidden_folder(self, folder_path):
-        """恢复隐藏文件夹"""
-        try:
-            subprocess.run(
-                ['attrib', '-h', folder_path], 
-                capture_output=True, 
-                text=True, 
-                creationflags=subprocess.CREATE_NO_WINDOW  # 不创建控制台窗口
-            )
-            logging.info(f"已恢复隐藏文件夹: {folder_path}")
-        except Exception as e:
-            logging.error(f"恢复隐藏文件夹失败: {folder_path} - {e}")
-        """恢复隐藏文件夹"""
-        try:
-            os.system(f'attrib -h "{folder_path}"')
-            logging.info(f"已恢复隐藏文件夹: {folder_path}")
-        except Exception as e:
-            logging.error(f"恢复隐藏文件夹失败: {folder_path} - {e}")
+            logging.error(f"清理病毒文件失败 {file_path}: {e}")
+    
+    def finish_scan(self):
+        """完成扫描"""
+        self.scanning = False
+        
+        # 在主线程中关闭进度窗口
+        def close_window():
+            if hasattr(self, 'progress_window') and self.progress_window.winfo_exists():
+                self.progress_window.grab_release()
+                self.progress_window.destroy()
+            
+            # 显示结果
+            self.show_scan_result()
+        
+        self.root.after(0, close_window)
+    
+    def show_scan_result(self):
+        """显示扫描结果"""
+        scanned = self.scan_stats["scanned"]
+        virus_found = self.scan_stats["virus_found"]
+        
+        if virus_found > 0:
+            message = f"扫描完成！\n\n" \
+                     f"共扫描文件: {scanned} 个\n" \
+                     f"发现并清理病毒: {virus_found} 个\n\n" \
+                     f"详细日志已保存到：\n{LOG_FILE}"
+            messagebox.showinfo("扫描完成", message)
+        else:
+            message = f"扫描完成！\n\n" \
+                     f"共扫描文件: {scanned} 个\n" \
+                     f"未发现病毒文件\n\n" \
+                     f"详细日志已保存到：\n{LOG_FILE}"
+            messagebox.showinfo("扫描完成", message)
+    
+    def show_error(self, error_msg):
+        """显示错误"""
+        if hasattr(self, 'progress_window') and self.progress_window.winfo_exists():
+            self.progress_window.destroy()
+        
+        messagebox.showerror("扫描错误", error_msg)
 
 if __name__ == "__main__":
     # 检查是否以管理员身份运行
