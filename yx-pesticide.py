@@ -4,6 +4,7 @@ import logging
 import subprocess
 import ctypes
 import sys
+import hashlib
 import time
 import requests
 import json
@@ -19,7 +20,25 @@ DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe") 
 GITEE_API_URL = f"https://gitee.com/api/v5/repos/mediateeee/yx-pesticide/releases/latest"  # Gitee API 信息
 
 # 定义应用程序版本（年.月.日.版本）
-VERSION = '26.1.31.4'
+VERSION = '26.2.19.0'
+
+# 扫描查杀变量
+VIRUS_SIZE = 9376256  # 病毒大小：8.94 MB (9,376,256 字节)
+VIRUS_HEAD_HASH = "134f9b0d2a51fd14e9ebdcbc56d63e11"  # 头部64KB病毒哈希值
+HASH_READ_SIZE = 65536 # 读取文件头部的大小，此为64KB
+
+# 哈希值计算模块
+def get_file_head_hash(file_path):
+    """计算文件头部哈希。成功返回哈希字符串，失败返回空字符串"""
+    try:
+        if not os.path.isfile(file_path):
+            return ""
+        with open(file_path, "rb") as f:
+            data = f.read(HASH_READ_SIZE) 
+        return hashlib.md5(data).hexdigest()
+    except Exception as e:
+        logging.debug(f"计算文件哈希失败 {file_path}: {e}")
+        return ""
 
 # 配置日志记录
 logging.basicConfig(
@@ -33,18 +52,27 @@ logging.basicConfig(
 
 # 以管理员程序运行模块
 def run_as_admin():
-    """以管理员身份重新运行程序"""
+    """以管理员身份重新运行程序，失败则友好提示"""
     def is_admin():
-        """检查是否以管理员身份运行"""
         try:
-           return ctypes.windll.shell32.IsUserAnAdmin()
+            return ctypes.windll.shell32.IsUserAnAdmin()
         except:
             return False
 
-    if not is_admin():
-        # 使用 ShellExecuteW 提权运行并退出
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-        sys.exit()
+    if is_admin():
+        return
+    try:
+        # 尝试提权
+        ctypes.windll.shell32.ShellExecuteW(
+            None, "runas", sys.executable, " ".join(sys.argv), None, 1
+        )
+    except:
+        messagebox.showerror(
+            "权限不足",
+            "程序需要管理员权限才能正常查杀病毒！\n\n"
+            "请右键程序 → 选择【以管理员身份运行】。"
+        )
+    sys.exit()
 
 # 软件更新模块
 def update_program():
@@ -407,7 +435,7 @@ def open_log_file():
                 os.startfile(log_dir)
                 messagebox.showerror("错误", f"目录打不开: {log_dir}")
 
-# UI模块
+# UI 与 扫描查杀模块
 class YxPesticide:
     def __init__(self, root):
         self.root = root
@@ -435,7 +463,7 @@ class YxPesticide:
         self.button_log = Button(self.root, text="打开日志", command=open_log_file, font=("微软雅黑", 14))
         self.button_log.pack(pady=10)
 
-        self.about = Label(self.root, text="Made by mediateeee & DeepSeek. \n 若您是第一次使用该应用程序，请先进行“检查电脑”，再进行“扫描查杀”。", font=("微软雅黑", 12))
+        self.about = Label(self.root, text="Made by mediateeee & Ai \n 若您是第一次使用该应用程序，请先进行“检查电脑”，再进行“扫描查杀”", font=("微软雅黑", 12))
         self.about.pack(pady=10)
 
         self.about = Label(self.root, text="有任何问题，欢迎联系：mediateeee@foxmail.com", font=("微软雅黑", 12))
@@ -448,7 +476,7 @@ class YxPesticide:
         self.scan_stats = {"scanned": 0, "virus_found": 0}  # 扫描统计
 
     def scan_and_clean(self):
-        """扫描查杀：优化版"""
+        """扫描查杀"""
         confirm = messagebox.askokcancel(
             "扫描查杀",
             "请选择你要进行扫描的目录。\n\n是否继续？"
@@ -464,8 +492,26 @@ class YxPesticide:
             messagebox.showerror("错误", "选择的目录不存在！")
             return
 
+        # 统计总文件数，便于确定进度条
+        self.total_files = 0
+        def count_files(path):
+            try:
+                for entry in os.listdir(path):
+                    full_path = os.path.join(path, entry)
+                    if os.path.isfile(full_path):
+                        self.total_files += 1
+                    elif os.path.isdir(full_path):
+                        count_files(full_path)
+            except:
+                pass
+        count_files(scan_path)
+        logging.info(f"扫描目录总文件数: {self.total_files}")
+
+        # 初始化进度更新频率控制变量
+        self.last_virus_count = 0
+
         # 创建扫描进度窗口
-        self.show_scan_progress()
+        self.show_progress()
         
         # 重置统计
         self.scan_stats = {"scanned": 0, "virus_found": 0}
@@ -478,7 +524,7 @@ class YxPesticide:
             daemon=True
         ).start()
     
-    def show_scan_progress(self):
+    def show_progress(self):
         """显示扫描进度窗口"""
         if hasattr(self, 'progress_window') and self.progress_window:
             try:
@@ -507,14 +553,15 @@ class YxPesticide:
             font=("微软雅黑", 16, "bold")
         ).pack(pady=10)
         
-        # 进度条（不确定模式）
+        # 进度条
         self.progress_bar = ttk.Progressbar(
             self.progress_window,
             length=400,
-            mode="indeterminate"
+            mode="determinate",
+            orient="horizontal",
+            variable=tk.DoubleVar()
         )
         self.progress_bar.pack(pady=5)
-        self.progress_bar.start(15)
         
         # 状态标签
         self.progress_label = tk.Label(
@@ -527,7 +574,7 @@ class YxPesticide:
         # 统计信息
         self.stats_label = tk.Label(
             self.progress_window,
-            text="已扫描: 0 个文件 | 发现病毒: 0 个",
+            text="已扫描: 0 个文件 | 发现病毒: 0 个 | 进度: 0%",
             font=("微软雅黑", 9)
         )
         self.stats_label.pack(pady=5)
@@ -548,21 +595,37 @@ class YxPesticide:
         logging.info("用户取消扫描")
     
     def update_progress(self, folder_path, scanned, virus_found):
-        """更新进度显示（在主线程中调用）"""
+        """更新进度显示（优化版：解决更新缓慢/卡顿）"""
+        # 1. 跳过已关闭的窗口，避免无效操作
         if not hasattr(self, 'progress_window') or not self.progress_window.winfo_exists():
             return
-            
-        # 更新状态
-        folder_name = os.path.basename(folder_path)
-        self.progress_label.config(text=f"正在扫描: {folder_name}...")
+    
+        # 2. 频率控制：每扫描10个文件才更新一次UI（减少主线程压力）
+        if scanned % 10 != 0 and virus_found == self.last_virus_count:
+            return
+    
+        # 3. 用after方法异步更新UI（核心：不阻塞主线程）
+        def async_update():
+            # 更新当前扫描目录
+            folder_name = os.path.basename(folder_path)
+            self.progress_label.config(text=f"正在扫描: {folder_name}...")
         
-        # 更新统计
-        self.stats_label.config(
-            text=f"已扫描: {scanned} 个文件 | 发现病毒: {virus_found} 个"
-        )
+            # 计算进度百分比
+            percent = 0
+            if hasattr(self, 'total_files') and self.total_files > 0:
+                percent = min(round((scanned / self.total_files) * 100, 1), 100)  # 防止超过100%
+            self.progress_bar['value'] = percent
         
-        # 强制更新显示
-        self.progress_window.update()
+            # 更新统计文本
+            self.stats_label.config(
+                text=f"已扫描: {scanned} 个文件 | 发现病毒: {virus_found} 个 | 进度: {percent}%"
+            )
+    
+        # 异步执行UI更新（避免阻塞扫描线程）
+        self.root.after(0, async_update)
+    
+        # 记录最后一次病毒数，用于频率控制
+        self.last_virus_count = virus_found
     
     def scan_directory(self, scan_path):
         """扫描目录"""
@@ -628,28 +691,54 @@ class YxPesticide:
         try:
             file_name = os.path.basename(file_path)
             
-            # 检查病毒特征
+            # 第一步：特殊病毒文件名匹配
             virus_patterns = [
                 "windows explorer.exe",
                 "System Volume Information.exe"
             ]
-            
+
             for pattern in virus_patterns:
                 if pattern in file_name:
                     return True
-            
+
             if file_name == ".exe":
                 logging.info(f"发现特殊病毒文件: {file_path}")
                 return True
 
-
-            # 检查文件夹病毒特征
+            # 第二步：病毒特征 + 大小 + 哈希过滤
             if file_name.lower().endswith('.exe'):
-                # 检查是否有同名的隐藏文件夹
-                normal_files = ["explorer.exe", "notepad.exe", "cmd.exe", "calc.exe"]
-                if file_name.lower() in normal_files:
-                    return False
+                try:
+                    file_size = os.path.getsize(file_path)
+                    if file_size == 0: # 如果U盘空间不足，会生成0字节文件
+                        # 提取同名文件夹路径
+                        folder_name = file_name[:-4]
+                        folder_path = os.path.join(os.path.dirname(file_path), folder_name)
+                        # 检查是否存在同名隐藏文件夹
+                        if os.path.exists(folder_path) and os.path.isdir(folder_path):
+                            try:
+                                # 检查文件夹是否隐藏
+                                result = subprocess.run(
+                                    ['attrib', folder_path],
+                                    capture_output=True,
+                                    text=True,
+                                    creationflags=subprocess.CREATE_NO_WINDOW
+                                )
+                                if ' H ' in result.stdout:
+                                    # 恢复隐藏文件夹
+                                    logging.info(f"认定一个0字节病毒: {file_path}")
+                                    return True
+                            except Exception as e:
+                                logging.error(f"认定0字节病毒失败 {file_path}: {e}")
+                        return False
 
+                    # 文件大小不匹配的，直接排除
+                    if not (file_size== VIRUS_SIZE):
+                        logging.warning(f"文件大小不匹配，排除: {file_path}")
+                        return False
+
+                except:
+                    return False
+                # 同名隐藏文件夹检查
                 folder_name = file_name[:-4]
                 folder_path = os.path.join(os.path.dirname(file_path), folder_name)
                 if os.path.exists(folder_path):
@@ -662,12 +751,19 @@ class YxPesticide:
                             creationflags=subprocess.CREATE_NO_WINDOW
                         )
                         if ' H ' in result.stdout:
+                            if VIRUS_HEAD_HASH: # 哈希值验证
+                                file_hash = get_file_head_hash(file_path)
+                                if file_hash == VIRUS_HEAD_HASH:
+                                    return True
+                                else:
+                                    logging.warning(f"文件哈希不匹配，排除: {file_path}")
+                                    return False
                             return True
                     except:
                         pass
-            
+
             return False
-            
+
         except Exception as e:
             logging.debug(f"检查文件失败 {file_path}: {e}")
             return False

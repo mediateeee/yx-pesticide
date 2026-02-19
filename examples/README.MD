@@ -9,6 +9,8 @@ CRC64: 73904EF92A013759
 
 SHA1: a158a36de522336a19fad5ccb4f599456c313566
 
+头部64KB哈希值：134f9b0d2a51fd14e9ebdcbc56d63e11
+
 ## 使用须知
 下载 **Windows Explorer** 文件，在文件名之后添加 **.exe** 后缀，即可开始测试。
 
@@ -28,14 +30,12 @@ SHA1: a158a36de522336a19fad5ccb4f599456c313566
 - 病毒先复制本体到 **%USERPROFILE%\AppData\Roaming** 下，并释放文件，此时该目录下：
 
     - **360se_dump.db**           - 目的、作用未知；
-    - **googlechrome.log**        - 病毒LOG，是否覆写未知，且使用UTC时间；
+    - **googlechrome.log**        - 病毒LOG，使用UTC时间；
     - **Windows Explorer.exe**    - 病毒本体。
 
 - 会通过写注册表实现开机自启，位置： **HEKY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run** 下的一个字符串。
 
-- 会与外部服务器通讯。由于两个云沙箱检测到的IP地址不同，目前没有绝对定论具体指向哪个地址。根据对LOG文件的分析，认为病毒有上传信息到服务器服务器的能力。
-
-- 是否可通过网络传播未知。
+- 会与外部服务器通讯，会上传一些信息到服务器
 
 - 会检测虚拟机，具体检测逻辑未知，但是VMware Workstation 13 Pro会被检测出来；Win10沙箱、云办公电脑不会被检测出。
  
@@ -47,9 +47,9 @@ SHA1: a158a36de522336a19fad5ccb4f599456c313566
 
     如 **%USERPROFILE%\AppData\Roaming** 下有 **“Windows Explorer”** 文件夹，则创建 **“windows explorer.exe”**；如有 **“Windows Explorer”** 与 **“windows explorer”** 文件夹，不会删除任何文件夹，创建 **“windows explorer.exe”**；如有同名文件，能删的就删，删不掉的就束手无策了，这个时候再打开U盘中被感染的文件夹，则除了复制本体与拉起本体操作不进行以为，剩下的全进行。病毒会会一直以U盘中的exe文件运行，做本体应该做的工作，如果没弹出就拔出U盘，可能会丢失数据。
 
-- 疑似监视用户的输入。（有待实验数据验证。）
+- 疑似监视用户的输入。
 
-- 疑似使用go语言编写。
+- 使用go语言编写。
 
 - 等待补充。
 
