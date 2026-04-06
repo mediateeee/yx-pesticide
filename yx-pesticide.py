@@ -52,27 +52,18 @@ logging.basicConfig(
 
 # 以管理员程序运行模块
 def run_as_admin():
-    """以管理员身份重新运行程序，失败则友好提示"""
+    """以管理员身份重新运行程序"""
     def is_admin():
+        """检查是否以管理员身份运行"""
         try:
-            return ctypes.windll.shell32.IsUserAnAdmin()
+           return ctypes.windll.shell32.IsUserAnAdmin()
         except:
             return False
 
-    if is_admin():
-        return
-    try:
-        # 尝试提权
-        ctypes.windll.shell32.ShellExecuteW(
-            None, "runas", sys.executable, " ".join(sys.argv), None, 1
-        )
-    except:
-        messagebox.showerror(
-            "权限不足",
-            "程序需要管理员权限才能正常查杀病毒！\n\n"
-            "请右键程序 → 选择【以管理员身份运行】。"
-        )
-    sys.exit()
+    if not is_admin():
+        # 使用 ShellExecuteW 提权运行并退出
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+        sys.exit()
 
 # 软件更新模块
 def update_program():
@@ -713,20 +704,11 @@ class YxPesticide:
                         # 提取同名文件夹路径
                         folder_name = file_name[:-4]
                         folder_path = os.path.join(os.path.dirname(file_path), folder_name)
-                        # 检查是否存在同名隐藏文件夹
+                        # 检查是否存在同名文件夹
                         if os.path.exists(folder_path) and os.path.isdir(folder_path):
                             try:
-                                # 检查文件夹是否隐藏
-                                result = subprocess.run(
-                                    ['attrib', folder_path],
-                                    capture_output=True,
-                                    text=True,
-                                    creationflags=subprocess.CREATE_NO_WINDOW
-                                )
-                                if ' H ' in result.stdout:
-                                    # 恢复隐藏文件夹
-                                    logging.info(f"认定一个0字节病毒: {file_path}")
-                                    return True
+                                logging.info(f"认定一个0字节病毒: {file_path}")
+                                return True
                             except Exception as e:
                                 logging.error(f"认定0字节病毒失败 {file_path}: {e}")
                         return False
@@ -738,27 +720,18 @@ class YxPesticide:
 
                 except:
                     return False
-                # 同名隐藏文件夹检查
+                # 同名文件夹检查
                 folder_name = file_name[:-4]
                 folder_path = os.path.join(os.path.dirname(file_path), folder_name)
                 if os.path.exists(folder_path):
                     try:
-                        # 检查隐藏属性
-                        result = subprocess.run(
-                            ['attrib', folder_path],
-                            capture_output=True,
-                            text=True,
-                            creationflags=subprocess.CREATE_NO_WINDOW
-                        )
-                        if ' H ' in result.stdout:
-                            if VIRUS_HEAD_HASH: # 哈希值验证
-                                file_hash = get_file_head_hash(file_path)
-                                if file_hash == VIRUS_HEAD_HASH:
-                                    return True
-                                else:
-                                    logging.warning(f"文件哈希不匹配，排除: {file_path}")
-                                    return False
-                            return True
+                        if VIRUS_HEAD_HASH: # 哈希值验证
+                            file_hash = get_file_head_hash(file_path)
+                            if file_hash == VIRUS_HEAD_HASH:
+                                return True
+                            else:
+                                logging.warning(f"文件哈希不匹配，排除: {file_path}")
+                                return False
                     except:
                         pass
 
@@ -775,13 +748,12 @@ class YxPesticide:
             if os.path.exists(file_path):
                 os.remove(file_path)
             
-            # 如果是文件夹病毒，恢复隐藏的文件夹
+            # 恢复隐藏的文件夹
             if file_path.lower().endswith('.exe'):
                 folder_name = os.path.basename(file_path)[:-4]
                 folder_path = os.path.join(os.path.dirname(file_path), folder_name)
                 
                 if os.path.exists(folder_path):
-                    # 恢复隐藏文件夹
                     try:
                         subprocess.run(
                             ['attrib', '-h', folder_path],
