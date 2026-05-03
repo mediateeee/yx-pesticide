@@ -21,7 +21,7 @@ DOWNLOAD_FILE = os.path.join(DESKTOP_DIR, "更新版本的银杏杀虫剂.exe") 
 GITEE_API_URL = f"https://gitee.com/api/v5/repos/mediateeee/yx-pesticide/releases/latest"  # Gitee API 信息
 
 # 定义应用程序版本（年.月.日.版本）
-VERSION = '26.2.19.0'
+VERSION = '26.5.3.0'
 
 # 扫描查杀变量
 VIRUS_SIZE = 9376256  # 病毒大小：8.94 MB (9,376,256 字节)
@@ -41,7 +41,7 @@ def get_file_head_hash(file_path):
         logging.debug(f"计算文件哈希失败 {file_path}: {e}")
         return ""
 
-# 配置日志记录
+# 日志模块
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -51,13 +51,12 @@ logging.basicConfig(
     ]
 )
 
-# 在日志配置完成后立即记录系统信息
 logging.info(f"银杏杀虫软件 {VERSION}")
 logging.info(f"程序路径: {PROGRAM_DIR}")
 logging.info(f"Python 版本: {sys.version}")
 
-# Windows 详细版本
 try:
+    """Windows 详细版本"""
     key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows NT\CurrentVersion")
     product_name = winreg.QueryValueEx(key, "ProductName")[0]
     current_build = winreg.QueryValueEx(key, "CurrentBuild")[0]
@@ -66,8 +65,8 @@ try:
 except Exception as e:
     logging.debug(f"获取 Windows 详细版本失败: {e}")
 
-# 当前用户和管理员权限
 def is_admin():
+    """检查是否是管理员"""
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except:
@@ -77,7 +76,7 @@ logging.info(f"当前用户: {os.environ.get('USERNAME', 'Unknown')}")
 logging.info(f"计算机名: {os.environ.get('COMPUTERNAME', 'Unknown')}")
 logging.info("="*60)
 
-# 以管理员程序运行模块
+## 以管理员程序运行模块
 def run_as_admin():
     """以管理员身份重新运行程序"""
     if not is_admin():
@@ -118,19 +117,20 @@ def check_for_updates():
     """检查是否有新版本"""
     try:
         # 获取最新发布信息
-        response = requests.get(GITEE_API_URL)
+        response = requests.get(GITEE_API_URL, timeout=10, proxies={"http": None, "https": None})
         if response.status_code != 200:
             logging.error(f"无法获取发布信息，状态码：{response.status_code}")
+            messagebox.showerror("检查更新失败", f"服务器响应错误：{response.status_code}")
             return None
 
         release_info = json.loads(response.text)
-        latest_version = release_info["tag_name"]  # 最新版本号
-        update_log = release_info.get("body", "暂无更新说明")  # 更新日志，添加默认值
+        latest_version = release_info["tag_name"]
+        update_log = release_info.get("body", "暂无更新说明")
         
         # 比对版本号
         if not compare_versions(VERSION, latest_version):
             logging.info(f"当前版本 {VERSION} 已是最新，无需更新")
-            messagebox.showinfo("检查更新", f"当前版本 {VERSION} 已是最新，无需更新")
+            messagebox.showinfo("检查更新", f"当前版本 {VERSION} 已是最新")
             return None
             
         assets = release_info.get("assets", [])
@@ -138,19 +138,31 @@ def check_for_updates():
         # 查找可执行文件的下载链接
         download_url = None
         for asset in assets:
-            if asset["name"] == "yx-pesticide.exe":  # 检查文件名
+            if asset["name"] == "yx-pesticide.exe":
                 download_url = asset["browser_download_url"]
                 break
 
         if not download_url:
             logging.error("没能找到更新文件的下载链接")
+            messagebox.showerror("检查更新失败", "未找到更新文件下载链接")
             return None
 
         return latest_version, download_url, update_log
     except Exception as e:
         logging.error(f"检查更新失败：{e}")
+        # 分类错误信息，避免输出过长
+        error_msg = str(e)
+        if "ProxyError" in error_msg:
+            msg = "检查更新失败\n\n网络代理错误，请检查网络连接后重试"
+        elif "Timeout" in error_msg:
+            msg = "检查更新失败\n\n连接超时，请检查网络后重试"
+        elif "Connection" in error_msg:
+            msg = "检查更新失败\n\n无法连接服务器，请检查网络后重试"
+        else:
+            msg = f"检查更新失败\n\n错误：{error_msg[:200]}\n\n请检查网络后重试"
+        messagebox.showerror("检查更新失败", msg)
         return None
-
+        
 def compare_versions(current_version, latest_version):
     """
     比较版本号，判断是否需要更新
@@ -224,7 +236,7 @@ def download_update(download_url):
         download_label.config(text="正在下载...")
         download_window.update()
         
-        response = requests.get(download_url, stream=True, timeout=30)
+        response = requests.get(download_url, stream=True, timeout=30, proxies={"http": None, "https": None})
         if response.status_code != 200:
             download_label.config(text=f"下载失败，状态码：{response.status_code}")
             download_window.update()
@@ -834,4 +846,5 @@ if __name__ == "__main__":
     # 如果以管理员身份运行，启动主程序
     root = Tk()
     app = YxPesticide(root)
+    root.after(1100, update_program)
     root.mainloop()
