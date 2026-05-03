@@ -8,6 +8,7 @@ import hashlib
 import time
 import requests
 import json
+import winreg
 import threading
 import tkinter as tk
 from tkinter import Tk, Button, Label, messagebox, filedialog, ttk
@@ -50,16 +51,35 @@ logging.basicConfig(
     ]
 )
 
+# 在日志配置完成后立即记录系统信息
+logging.info(f"银杏杀虫软件 {VERSION}")
+logging.info(f"程序路径: {PROGRAM_DIR}")
+logging.info(f"Python 版本: {sys.version}")
+
+# Windows 详细版本
+try:
+    key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows NT\CurrentVersion")
+    product_name = winreg.QueryValueEx(key, "ProductName")[0]
+    current_build = winreg.QueryValueEx(key, "CurrentBuild")[0]
+    winreg.CloseKey(key)
+    logging.info(f"Windows 详细版本: {product_name} (Build {current_build})")
+except Exception as e:
+    logging.debug(f"获取 Windows 详细版本失败: {e}")
+
+# 当前用户和管理员权限
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+logging.info(f"当前用户: {os.environ.get('USERNAME', 'Unknown')}")
+logging.info(f"计算机名: {os.environ.get('COMPUTERNAME', 'Unknown')}")
+logging.info("="*60)
+
 # 以管理员程序运行模块
 def run_as_admin():
     """以管理员身份重新运行程序"""
-    def is_admin():
-        """检查是否以管理员身份运行"""
-        try:
-           return ctypes.windll.shell32.IsUserAnAdmin()
-        except:
-            return False
-
     if not is_admin():
         # 使用 ShellExecuteW 提权运行并退出
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
