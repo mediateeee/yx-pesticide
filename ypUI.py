@@ -42,15 +42,25 @@ class YxPesticide:
     def __init__(self, root):
         self.root = root
         self.root.title("银杏杀虫软件")
-        self.root.geometry("680x720")
-        self.root.minsize(600, 640)
+        dpi_scale = max(1.0, self.root.winfo_fpixels("1i") / 96)
+        self.ui_scale = min(1.25, 1 + (dpi_scale - 1) * 0.65)
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        base_width = round(680 * self.ui_scale)
+        base_height = round(720 * self.ui_scale)
+        min_width = round(520 * self.ui_scale)
+        min_height = round(420 * self.ui_scale)
+        window_width = min(base_width, max(min_width, int(screen_width * 0.7)))
+        window_height = min(base_height, max(min_height, int(screen_height * 0.8)))
+        self.root.geometry(f"{window_width}x{window_height}")
+        self.root.minsize(min(min_width, window_width), min(min_height, window_height))
         self.root.configure(bg="#eef3f1")
         self.setup_styles()
-        header = tk.Frame(root, bg="#123c36", height=150)
+        header = tk.Frame(root, bg="#123c36", height=round(158 * self.ui_scale))
         header.pack(fill="x")
         header.pack_propagate(False)
-        tk.Label(header, text="银杏杀虫软件", bg="#123c36", fg="#f7fbf8", font=("微软雅黑", 28, "bold"), pady=18).pack()
-        tk.Label(header, text=f"专注于 Windows Explorer.exe 文件夹病毒的清理工具  ·  v{VERSION}", bg="#123c36", fg="#b9d8cd", font=("微软雅黑", 10)).pack()
+        tk.Label(header, text="银杏杀虫软件", bg="#123c36", fg="#f7fbf8", font=("微软雅黑", round(28 * self.ui_scale), "bold"), pady=round(18 * self.ui_scale)).pack()
+        tk.Label(header, text=f"专注于 Windows Explorer.exe 文件夹病毒的清理工具  ·  v{VERSION}", bg="#123c36", fg="#b9d8cd", font=("微软雅黑", round(10 * self.ui_scale))).pack()
         content = tk.Frame(root, bg="#eef3f1")
         content.pack(fill="both", expand=True, padx=42, pady=(28, 16))
         tk.Label(content, text="选择操作", bg="#eef3f1", fg="#173a34", font=("微软雅黑", 16, "bold"), anchor="w").pack(fill="x")
@@ -63,11 +73,11 @@ class YxPesticide:
             row.pack(fill="x", pady=5)
             ttk.Button(row, text=text, command=command, style="secondary.TButton", width=11).pack(side="left", padx=12, pady=10)
             tk.Label(row, text=hint, bg="#ffffff", fg="#61736e", font=("微软雅黑", 10)).pack(side="left", padx=(4, 12))
-        footer = tk.Frame(root, bg="#dfeae6", height=72)
+        footer = tk.Frame(root, bg="#dfeae6", height=(78 * self.ui_scale))
         footer.pack(fill="x", side="bottom")
         footer.pack_propagate(False)
-        tk.Label(footer, text="反馈邮箱  mediateeee@foxmail.com", bg="#dfeae6", fg="#45645b", font=("微软雅黑", 9)).pack(pady=(12, 2))
-        tk.Label(footer, text="开源项目  https://gitee.com/mediateeee/yx-pesticide", bg="#dfeae6", fg="#45645b", font=("微软雅黑", 9)).pack()
+        tk.Label(footer, text="反馈邮箱  mediateeee@foxmail.com", bg="#dfeae6", fg="#45645b", font=("微软雅黑", round(9 * self.ui_scale))).pack(pady=(round(12 * self.ui_scale), round(2 * self.ui_scale)))
+        tk.Label(footer, text="开源项目  https://gitee.com/mediateeee/yx-pesticide", bg="#dfeae6", fg="#45645b", font=("微软雅黑", round(9 * self.ui_scale))).pack()
         self.scanning = False
         self.scan_stats = {"scanned": 0, "virus_found": 0}
         self.total_files = 0
@@ -88,8 +98,8 @@ class YxPesticide:
     def show_progress(self):
         self.progress_window = tk.Toplevel(self.root)
         self.progress_window.title("扫描进度")
-        window_width = 450
-        window_height = 220
+        window_width = round(450 * self.ui_scale)
+        window_height = round(220 * self.ui_scale)
         self.root.update_idletasks()
         window_x = self.root.winfo_x() + (self.root.winfo_width() - window_width) // 2
         window_y = self.root.winfo_y() + (self.root.winfo_height() - window_height) // 2
