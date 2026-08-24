@@ -1,7 +1,10 @@
-﻿pyinstaller -F -w --version-file C:\Users\MSI\Desktop\yx-pesticide\version.txt C:\Users\MSI\Desktop\yx-pesticide\yx-pesticide.py
-上述命令指定版本的打包，单文件，无控制台窗口
-pyinstaller -D -w --version-file C:\Users\MSI\Desktop\yx-pesticide\version.txt C:\Users\MSI\Desktop\yx-pesticide\yx-pesticide.py
-上述命令指定版本的打包，目录形式，无控制台窗口
-建议使用7z SFX Builder将目录打包成单文件
-pyinstaller -D -w --version-file C:\Users\MSI\Desktop\yx-pesticide\version.txt C:\Users\MSI\Desktop\yx-pesticide\yx-pesticide.py --noconfirm
-上述命令指定版本的打包，目录形式，无控制台窗口，同时避免询问是否删除之前打包的文件夹
+﻿在项目根目录执行
+
+单文件、无控制台：
+pyinstaller -F -w --version-file version.txt yx-pesticide.py --noconfirm
+
+目录形式、无控制台：
+pyinstaller -D -w --version-file version.txt yx-pesticide.py --noconfirm
+
+建议使用 7z SFX Builder 将目录打包成单文件。
+打包前请确认资源管理器中的文件版本与 yx-pesticide.py 里的 VERSION 一致。

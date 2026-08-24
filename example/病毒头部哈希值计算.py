@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import hashlib
+## 使用时更改VIRUS_FILE_PATH
 VIRUS_FILE_PATH = r"C:\Users\MSI\Desktop\yx-pesticide\examples\Windows Explorer.exe"  # 病毒文件实际路径
 
 HASH_READ_SIZE = 65536  # 前64KB
