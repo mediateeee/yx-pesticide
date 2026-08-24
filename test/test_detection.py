@@ -11,7 +11,7 @@ import tempfile
 import unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODULE_PATH = os.path.join(ROOT, "yx-pesticide.py")
+MODULE_PATH = os.path.join(ROOT, "ypMAIN.py")
 spec = importlib.util.spec_from_file_location("yx_pesticide", MODULE_PATH)
 app = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(app)
@@ -46,7 +46,7 @@ class DetectionTests(unittest.TestCase):
             with open(decoy, "wb") as f:
                 f.write(os.urandom(app.VIRUS_SIZE))
             original = app.get_file_head_hash
-            app.get_file_head_hash = lambda _path: app.VIRUS_HEAD_HASH
+            app.get_file_head_hash = lambda _path: app.VIRUS_HEAD_MD5
             try:
                 self.assertTrue(app.is_virus_file(decoy))
             finally:

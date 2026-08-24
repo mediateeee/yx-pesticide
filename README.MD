@@ -3,7 +3,7 @@
 
 因大多数杀毒软件都不能很好地查杀这个病毒，故我根据已掌握的信息借助 AI 编写了这款工具。
 
-## 运行原理
+## 核心内容
 * 检查电脑
 
     结束已知病毒进程，校验并删除 `%AppData%\Roaming` 下的病毒本体及附属文件，清理注册表启动项。
@@ -20,17 +20,21 @@
     使用 Gitee API 获取最新发布。下载后检查 PE 文件头；若发布说明中含 `SHA256: <64位哈希>`，还会校验完整文件。
 
 ## 目录结构
-- yx-pesticide.py      - 主程序
+- ypMAIN.py            - 程序入口、公共常量与通用工具
+- ypUI.py              - 用户界面
+- ypCHECK.py           - 检查电脑功能
+- ypSCAN.py            - 扫描查杀功能
+- ypUPDATE.py          - 更新功能
 - requirements.txt     - Python 依赖
-- example              - 本软件所针对查杀的病毒样本说明
+- example              - 本软件所针对查杀的病毒样及其说明
 - test                 - 测试辅助工具
-- version.txt          - 打包成 exe 时的版本信息（须与程序内 VERSION 一致）
+- version.txt          - 打包成 exe 时的版本信息
 
 ## 运行与打包
 为了适配 Windows7 ，软件是以 Python3.8.0 为基础编写的，理论上可以在>=3.8.0版本的 Python 上运行
 ```text
 pip install -r requirements.txt
-python yx-pesticide.py
+python ypMAIN.py
 ```
 
 打包命令见 `How to pyinstaller.txt`。
@@ -39,4 +43,4 @@ python yx-pesticide.py
 详见 `example` 文件夹。
 
 ## 问题反馈
-本应用程序开发时间短，还有很多问题没有被考虑和解决。若在使用过程中发现问题，请提交 issue；如有必要请联系 mediateeee@foxmail.com
+本应用程序开发时间短，还有很多问题没有被考虑和解决。若在使用过程中发现问题，请提交 issue；如您有能力进一步完善，欢迎提交PR；如有必要请联系 mediateeee@foxmail.com
