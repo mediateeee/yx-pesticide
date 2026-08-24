@@ -22,7 +22,7 @@ def enable_dpi_awareness():
 
 enable_dpi_awareness()
 
-VERSION = "26.8.24.3"                      #定义当前版本号
+VERSION = "26.8.24.8"                      #定义当前版本号
 CREATE_NO_WINDOW = 0x08000000              #使子进程运行时不弹黑框
 NO_PROXY = {"http": None, "https": None}   #避免因为代理导致无法访问码云
 #定义 程序目录、日志文件路径、桌面路径、下载更新的文件路径、更新的API地址
